@@ -1,4 +1,5 @@
 function Menu() {
+	document.getElementById("title").play();
 //	addEventListener("click", function (e) {
 //	e.stopPropagation();
 //	clickablet();
@@ -111,25 +112,25 @@ Menu.prototype.render = function () {
 	ctx.textBaseline = "center";
 	
 	switch(selectValue) {
-		case 1: ctx.drawImage(bomberman, 0, 0, 32, 32, screenWidth/4 , 300, 32, 32)
+		case 1: ctx.drawImage(bomberman, 0, 0, 32, 32, screenWidth/4 , 298, 32, 32)
 				ctx.fillText(" New Game ", screenWidth/2,300);
 				ctx.fillText(" Multiplayer ", screenWidth/2,335);
 				ctx.fillText(" Scores ", screenWidth/2,370);
 				ctx.fillText(" Options ", screenWidth/2,405);
 				break;
-		case 2: ctx.drawImage(bomberman, 0, 0, 32, 32, screenWidth/4 , 335, 32, 32)
+		case 2: ctx.drawImage(bomberman, 0, 0, 32, 32, screenWidth/4 , 333, 32, 32)
 				ctx.fillText(" New Game ", screenWidth/2,300);
 				ctx.fillText(" Multiplayer ", screenWidth/2,335);
 				ctx.fillText(" Scores ", screenWidth/2,370);
 				ctx.fillText(" Options ", screenWidth/2,405);
 				break;
-		case 3: ctx.drawImage(bomberman, 0, 0, 32, 32, screenWidth/4 , 370, 32, 32)
+		case 3: ctx.drawImage(bomberman, 0, 0, 32, 32, screenWidth/4 , 368, 32, 32)
 				ctx.fillText(" New Game ", screenWidth/2,300);
 				ctx.fillText(" Multiplayer ", screenWidth/2,335);
 				ctx.fillText(" Scores ", screenWidth/2,370);
 				ctx.fillText(" Options ", screenWidth/2,405);
 				break;
-		case 4: ctx.drawImage(bomberman, 0, 0, 32, 32, screenWidth/4 , 405, 32, 32)
+		case 4: ctx.drawImage(bomberman, 0, 0, 32, 32, screenWidth/4 , 403, 32, 32)
 				ctx.fillText(" New Game ", screenWidth/2,300);
 				ctx.fillText(" Multiplayer ", screenWidth/2,335);
 				ctx.fillText(" Scores ", screenWidth/2,370);

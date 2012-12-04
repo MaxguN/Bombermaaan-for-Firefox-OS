@@ -1,10 +1,10 @@
-
+var joueur;
 
 function Game() {
 	this.x = screenWidth / 2;
 	this.y = screenHeight / 2;
-	//addEventListener('click', alert('toto'), false);
-	//addEventListener('touchend', this.pressup, true);
+	joueur = new Personnage("Bomberman.png", 7, 14, DIRECTION.BAS);
+	map.addPersonnage(joueur);
 }
 
 Game.prototype.pressdown = function (e){
@@ -100,22 +100,35 @@ Game.prototype.event = function () {
 	}
 
 	if (keysDown[keys.escape]) {
+		joueur = null;
 		menu.exitGame();
 		keysDown[keys.escape] = false;
 	}
+	
+	if (keysDown[keys.escape]) {
+		joueur = undefined;
+		menu.exitGame();
+		keysDown[keys.escape] = false;
+	}
+	
+	if (keysDown[keys.space]) {
+		
+	
+	}
+	
 }
 
 Game.prototype.update = function (length) {
-	this.event();
+	this.event();	
 	
 	if (action.haut) {
-		this.y -= length * 100;
+		joueur.deplacer(DIRECTION.HAUT, map)
 	 } else if (action.droite) {
-		this.x += length * 100;
+		joueur.deplacer(DIRECTION.DROITE, map)
 	} else if (action.bas) {
-		this.y += length * 100;
-	} else if (action.gauche) {
-		this.x -= length * 100;
+		joueur.deplacer(DIRECTION.BAS, map)
+	} else if (action.gauche) {		
+		joueur.deplacer(DIRECTION.GAUCHE, map)
 	}
 	
 	this.render();
@@ -125,6 +138,10 @@ Game.prototype.render = function () {
 	ctx.fillStyle="black";
 	ctx.fillRect(0,0,screenWidth,screenHeight);
 	ctx.fillStyle = "rgb(250, 250, 250)";
+	map.dessinerMap(ctx);
+	/*ctx.fillStyle="black";
+	ctx.fillRect(0,0,screenWidth,screenHeight);
+	ctx.fillStyle = "rgb(250, 250, 250)";
 	ctx.font = "16px SquareFont";
 	ctx.textAlign = "left";
 	ctx.textBaseline = "top";
@@ -132,6 +149,6 @@ Game.prototype.render = function () {
 	ctx.fillText("X : " + this.x, 50, 100);
 	ctx.fillText("Y : " + this.y, 50, 120);
 
-	ctx.drawImage(bomberman, 0, 0, 32, 56, this.x, this.y, 32, 56);
+	ctx.drawImage(bomberman, 0, 0, 32, 56, this.x, this.y, 32, 56);*/
 	
 }

@@ -9,7 +9,6 @@ var DUREE_ANIMATION = 4;
 var DUREE_DEPLACEMENT = 8;
 
 
-
 function Personnage(url, x, y, direction) {
 	this.x = x; // (en cases)
 	this.y = y; // (en cases)

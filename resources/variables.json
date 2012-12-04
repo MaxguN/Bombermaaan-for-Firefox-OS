@@ -1,5 +1,5 @@
 {
-	"personnageBleuSrc" : "resources/images/Bomberman.png",
+	"personnageBleuSrc" : "resources/images/bomberman.png",
 	"personnageBleuPositionInitX" : "1",
 	"personnageBleuPositionInitY" : "1"
 }

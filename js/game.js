@@ -1,6 +1,6 @@
 
 var joueur;
-var nomFichierVariables = './resources/variables.json';
+var nomFichierVariables = 'resources/variables.json';
 var map;
 
 

@@ -29,35 +29,7 @@ canvas.height = screenHeight;
 
 document.body.appendChild(canvas);
 
-var metrics = {
-	width : 0,
-	height : 0,
-	offset : {
-		top : 0,
-		right : 0,
-		bottom : 0,
-		left : 0
-	},
-	cwidth : function () {	// computed width
-		return metrics.width - (metrics.offset.right + metrics.offset.left);
-	},
-	cheight : function () { // computed height
-		return metrics.height - (metrics.offset.top + metrics.offset.bottom);
-	}
-};
 
-function stretch() {
-	metrics.width = document.body.offsetWidth;
-	metrics.height = document.body.offsetHeight;
-	canvas.style.width = metrics.cwidth() + 'px';
-	canvas.style.height = metrics.cheight() + 'px';
-}
-
-stretch();
-window.addEventListener('resize', stretch, true);
-
-	
-		
 
 var menu = new Menu();
 var game;

@@ -6,10 +6,15 @@ var map;
 
 function Game() {
 
- map = new Map("map");//Initialisation des maps
+	map = new Map("map");//Initialisation des maps
+	screenWidth = map.getLargeur() * 32;
+	screenHeight = map.getHauteur() * 32;
+	canvas.width = screenWidth;
+	canvas.height = screenHeight;
+
+
  
- 
-//début de définition des variables
+	//début de définition des variables
 	// Création de l'objet XmlHttpRequest
 	var xhr = getXMLHttpRequest();
 

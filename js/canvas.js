@@ -1,0 +1,36 @@
+var screenWidth = 960;
+var screenHeight = 640;
+
+// Create the canvas
+var canvas = document.createElement("canvas");
+var ctx = canvas.getContext("2d");
+canvas.width = screenWidth;
+canvas.height = screenHeight;
+
+var metrics = {
+	width : 0,
+	height : 0,
+	cwidth : function () {	// computed width
+		return metrics.width ;
+	},
+	cheight : function () { // computed height
+		return metrics.height ;
+	}
+};
+
+function stretch() {
+	metrics.width = document.body.offsetWidth;
+	metrics.height = document.body.offsetHeight;
+	canvas.style.width = metrics.cwidth() + 'px';
+	canvas.style.height = metrics.cheight() + 'px';
+}
+
+stretch();
+window.addEventListener('resize', stretch, true);
+
+function adaptCoords(x, y){
+	return {
+		x : canvas.width * x /metrics.width,
+		y : canvas.height * y /metrics.height
+	};
+}

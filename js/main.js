@@ -1,6 +1,3 @@
-var screenWidth = 960;
-var screenHeight = 640;
-
 var selectValue = 1;
 
 
@@ -21,15 +18,7 @@ addEventListener("keydown", function (e) {
 	}
 }, false);
 
-// Create the canvas
-var canvas = document.createElement("canvas");
-var ctx = canvas.getContext("2d");
-canvas.width = screenWidth;
-canvas.height = screenHeight;
-
 document.body.appendChild(canvas);
-
-
 
 var menu = new Menu();
 var game;

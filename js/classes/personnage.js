@@ -6,7 +6,7 @@ var DIRECTION = {
 }
 
 var DUREE_ANIMATION = 4;
-var DUREE_DEPLACEMENT = 8;
+var DUREE_DEPLACEMENT = 16 ;
 
 
 function Personnage(url, x, y, direction) {
@@ -26,7 +26,7 @@ function Personnage(url, x, y, direction) {
 		this.referenceDuPerso.largeur = this.width / 4;
 		this.referenceDuPerso.hauteur = this.height / 4;
 	}
-	this.image.src = "resources/images/" + url;
+	this.image.src = url;
 }
 
 Personnage.prototype.dessinerPersonnage = function(context) {
@@ -114,7 +114,7 @@ Personnage.prototype.deplacer = function(direction, map) {
 	}
 	
 	// TODO : ici verifier si on ne passe pas dans un mur
-	if(map.terrain[prochaineCase.y][prochaineCase.x]==2){
+	if(map.terrain[prochaineCase.y][prochaineCase.x]!=2){
 		return false;
 	}
 	

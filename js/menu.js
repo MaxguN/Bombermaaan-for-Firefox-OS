@@ -32,17 +32,17 @@ Menu.prototype.exitGame = function () {
 }
 
 var clickablet = function (){
-	alert("toto");
+//	alert("toto");
 }
 
 Menu.prototype.pressdown = function (e){
 	consol.log("Touch event down");
-	alert("toto");
+//	alert("toto");
 }
 
 Menu.prototype.pressdown = function (e){
 	consol.log("Touch event up ");
-	alert("toto");
+//	alert("toto");
 }
 
 Menu.prototype.update = function (modifier) {

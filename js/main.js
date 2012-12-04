@@ -3,10 +3,10 @@ var screenHeight = window.innerHeight;
 
 var selectValue = 1;
 
+
 var bomberman = new Image();
 bomberman.src = "resources/images/bomberman.png";
 
-var map = new Map("map");//Initialisation des maps
 
 // Handle keyboard controls
 var keysDown = {};
@@ -48,4 +48,4 @@ var main = function () {
 
 
 var then = Date.now();
-setInterval(main, 1); // Execute as fast as possible
+setInterval(main, 20); // Execute as fast as possible

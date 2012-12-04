@@ -1,9 +1,32 @@
+
 var joueur;
+var nomFichierVariables = './resources/variables.json';
+var map;
+
 
 function Game() {
-	this.x = screenWidth / 2;
-	this.y = screenHeight / 2;
-	joueur = new Personnage("Bomberman.png", 7, 14, DIRECTION.BAS);
+
+ map = new Map("map");//Initialisation des maps
+ 
+ 
+//début de définition des variables
+	// Création de l'objet XmlHttpRequest
+	var xhr = getXMLHttpRequest();
+
+	// Chargement du fichier
+	xhr.open("GET", nomFichierVariables, false);
+	xhr.send(null);
+	if(xhr.readyState != 4 || (xhr.status != 200 && xhr.status != 0)) // Code == 0 en local
+		throw new Error("Impossible de charger le fichier de propriétés nommée \"" + nomFichierVariables + "\" (code HTTP : " + xhr.status + ").");
+	var varJsonProperties = xhr.responseText;
+	
+	// Analyse des données
+	var varProperties = JSON.parse(varJsonProperties);
+//fin de définition des variables
+	
+	
+	//initialisation du personnage
+	joueur = new Personnage(varProperties.personnageBleuSrc, varProperties.personnageBleuPositionInitX, varProperties.personnageBleuPositionInitY, DIRECTION.BAS);
 	map.addPersonnage(joueur);
 }
 

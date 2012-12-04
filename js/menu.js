@@ -10,6 +10,7 @@ function Menu() {
 
 Menu.prototype.launchGame = function () {
 	game = new Game();
+	document.getElementById("title").pause();
 	currentObject = game;
 	
 }

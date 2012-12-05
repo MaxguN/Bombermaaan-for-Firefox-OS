@@ -1,7 +1,7 @@
-
 var joueur;
 var nomFichierVariables = 'resources/variables.json';
 var map;
+var multiPad;
 
 
 function Game() {
@@ -27,12 +27,18 @@ function Game() {
 	
 	// Analyse des données
 	var varProperties = JSON.parse(varJsonProperties);
-//fin de définition des variables
+	//fin de définition des variables
 	
 	
 	//initialisation du personnage
 	joueur = new Personnage(varProperties.personnageBleuSrc, varProperties.personnageBleuPositionInitX, varProperties.personnageBleuPositionInitY, DIRECTION.BAS);
 	map.addPersonnage(joueur);
+	
+	//ajout du multipad !!!!!EN COURS DE DEV!!!!!!
+	//multiPad = new MultiPad("resources/images/multipad.png");
+	
+	//on charge les options du jeu personnalisées par le joueur (stockées en Local Storage)
+	optionsData = new OptionStorage();
 }
 
 Game.prototype.pressdown = function (e){
@@ -134,7 +140,12 @@ Game.prototype.event = function () {
 	}
 	
 	if (keysDown[keys.escape]) {
+		//on aide le garbage collector de JS en supprimant les références initules.
 		joueur = undefined;
+		optionsData = undefined;
+		game = undefined;
+		map = undefined;
+		
 		menu.exitGame();
 		keysDown[keys.escape] = false;
 	}
@@ -167,16 +178,11 @@ Game.prototype.render = function () {
 	ctx.fillRect(0,0,screenWidth,screenHeight);
 	ctx.fillStyle = "rgb(250, 250, 250)";
 	map.dessinerMap(ctx);
-	/*ctx.fillStyle="black";
-	ctx.fillRect(0,0,screenWidth,screenHeight);
-	ctx.fillStyle = "rgb(250, 250, 250)";
-	ctx.font = "16px SquareFont";
-	ctx.textAlign = "left";
-	ctx.textBaseline = "top";
-	
-	ctx.fillText("X : " + this.x, 50, 100);
-	ctx.fillText("Y : " + this.y, 50, 120);
+	//multiPad.render();
+	ctx.fillStyle = "red";
+	ctx.font = "10px SquareFont";
 
-	ctx.drawImage(bomberman, 0, 0, 32, 56, this.x, this.y, 32, 56);*/
+	ctx.fillText(optionsData.loadNickName(), 45 ,20);
+	
 	
 }

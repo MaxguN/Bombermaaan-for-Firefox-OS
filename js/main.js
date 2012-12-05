@@ -1,5 +1,5 @@
 var selectValue = 1;
-
+var optionsData; //l'objet qui set les options définies par le joueur.
 
 var bomberman = new Image();
 bomberman.src = "resources/images/bomberman.png";

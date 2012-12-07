@@ -1,10 +1,10 @@
 function Menu() {
 	document.getElementById("title").play();
-//	addEventListener("click", function (e) {
-//	e.stopPropagation();
-//	clickablet();
-//	console.log(e.clientX);
-//}, false);
+	theMenu = this;
+	addEventListener("click", function (e) {
+	e.stopPropagation();
+	theMenu.updateByClick(e);
+}, false);
 
 }
 
@@ -27,6 +27,10 @@ Menu.prototype.scores = function () {
 
 }
 
+Menu.prototype.multiplayer = function() {
+	window.location = "multiplayer.html";
+}
+
 Menu.prototype.exitGame = function () {
 	game = undefined;
 	
@@ -38,18 +42,34 @@ Menu.prototype.exitGame = function () {
 	currentObject = menu;
 }
 
-var clickablet = function (){
-//	alert("toto");
-}
-
-Menu.prototype.pressdown = function (e){
-	consol.log("Touch event down");
-//	alert("toto");
-}
-
-Menu.prototype.pressdown = function (e){
-	consol.log("Touch event up ");
-//	alert("toto");
+Menu.prototype.updateByClick = function (event){
+	console.log("Le vrai X : " + event.clientX);
+	console.log("Le vrai Y : " + event.clientY);
+	
+	var x = event.clientX;
+	var y = event.clientY;
+	
+	var computed  = adaptCoords(x, y);
+	
+	console.log("X computed: " + Math.round(computed.x));
+	console.log("Y computed: " + Math.round(computed.y));
+	
+	if ((Math.round(computed.x) >= 352 && Math.round(computed.x) <= 603) && (Math.round(computed.y) >= 303 && Math.round(computed.y) <= 330 )){
+		this.launchGame();
+	}
+	
+	if ((Math.round(computed.x) >= 314 && Math.round(computed.x) <= 639) && (Math.round(computed.y) >= 339 && Math.round(computed.y) <= 363 )){
+		this.multiplayer();
+	}
+	
+	if ((Math.round(computed.x) >= 390 && Math.round(computed.x) <= 564) && (Math.round(computed.y) >= 374 && Math.round(computed.y) <= 398 )){
+		this.scores();
+	}
+	
+	if ((Math.round(computed.x) >= 382 && Math.round(computed.x) <= 573) && (Math.round(computed.y) >= 409 && Math.round(computed.y) <= 432 )){
+		this.options();
+		
+	}
 }
 
 Menu.prototype.update = function (modifier) {
@@ -86,7 +106,7 @@ Menu.prototype.update = function (modifier) {
 		}
 		
 		if(selectValue === 2){
-			window.location = "multiplayer.html";
+			this.multiplayer();
 		}
 		
 		if(selectValue === 3){

@@ -44,7 +44,7 @@ function Game() {
  		navigator.userAgent.match(/iPod/i) || 
  		navigator.userAgent.match(/firefoxOS/i) || 1
 		){ 
- 			multiPad = new MultiPad("resources/images/D-pad.png","resources/images/action-button.png",joueur);
+ 			multiPad = new MultiPad(varProperties.pad,varProperties.button,joueur);
  			//multiPad.render();
 		}
 	
@@ -155,14 +155,15 @@ Game.prototype.event = function () {
 		optionsData = undefined;
 		game = undefined;
 		map = undefined;
+		multiPad = undefined;
 		
 		menu.exitGame();
 		keysDown[keys.escape] = false;
 	}
 	
 	if (keysDown[keys.space]) {
-		
 	
+		keysDown[keys.space] = false;
 	}
 	
 }

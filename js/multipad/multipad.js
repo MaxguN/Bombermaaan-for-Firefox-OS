@@ -1,7 +1,4 @@
-/**
-* Cette classe est chargée de la gestion du pad multidirectionnel.
-*
-**/
+var pushed;
 function MultiPad(urlPad, urlButton,joueur){
 	
 	this.pad = new Image();
@@ -28,6 +25,9 @@ function MultiPad(urlPad, urlButton,joueur){
 MultiPad.prototype.render = function() {
 	ctx.globalAlpha = 0.5;
 	ctx.drawImage(this.pad,20,screenHeight - 100);
-	ctx.drawImage(this.button,screenWidth - 100,screenHeight - 100);
+	
+	//not pusshed
+	ctx.drawImage(this.button, 65, 0,  64, 64,screenWidth - 85,screenHeight - 85, 64,64 );
+	
 	ctx.globalAlpha = 1;
 }

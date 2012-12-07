@@ -1,5 +1,7 @@
 {
 	"personnageBleuSrc" : "resources/images/bomberman.png",
 	"personnageBleuPositionInitX" : "1",
-	"personnageBleuPositionInitY" : "2"
+	"personnageBleuPositionInitY" : "2",
+	"pad" : "resources/images/D-pad.png",
+	"button" : "resources/images/action-button.png"
 }

@@ -2,14 +2,22 @@
 * Cette classe est chargée de la gestion du pad multidirectionnel.
 *
 **/
-function MultiPad(url){
-	this.image = new Image();
-	this.image.onload = function() {
+function MultiPad(urlPad, urlButton,joueur){
+	
+	this.pad = new Image();
+	this.pad.onload = function() {
 		if(!this.complete) 
-			throw "Erreur de chargement du sprite nommé \"" + url + "\".";
+			throw "Erreur de chargement du sprite nommŽe \"" + urlPad + "\".";
 	}
 	
-	this.image.src = url;
+	this.button = new Image();
+	this.button.onload = function() {
+		if(!this.complete) 
+			throw "Erreur de chargement du sprite nommŽe \"" + urlButton + "\".";
+	}
+	
+	this.pad.src = urlPad;
+	this.button.src = urlButton;
 
 }
 
@@ -18,5 +26,8 @@ function MultiPad(url){
 *
 **/
 MultiPad.prototype.render = function() {
-	ctx.drawImage(this.image,20,20);
+	ctx.globalAlpha = 0.5;
+	ctx.drawImage(this.pad,20,screenHeight - 100);
+	ctx.drawImage(this.button,screenWidth - 100,screenHeight - 100);
+	ctx.globalAlpha = 1;
 }

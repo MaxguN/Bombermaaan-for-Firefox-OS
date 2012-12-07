@@ -1,6 +1,5 @@
 function OptionStorage (){
 	if (localStorage) {
-	  console.log('Local Storage SupportÈ');
 	  //on set les variables par dÈfaut
 		
 		if( localStorage['pad'] === undefined){
@@ -12,7 +11,7 @@ function OptionStorage (){
 		
 
 	} else {
-	  alert('votre systËme ne supporte pas locale storage');
+	  alert('votre système ne supporte pas locale storage.');
 	  currentObject = menu;
 	  optionsData = undefined;
 	}

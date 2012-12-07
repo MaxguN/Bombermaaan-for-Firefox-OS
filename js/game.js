@@ -34,11 +34,21 @@ function Game() {
 	joueur = new Personnage(varProperties.personnageBleuSrc, varProperties.personnageBleuPositionInitX, varProperties.personnageBleuPositionInitY, DIRECTION.BAS);
 	map.addPersonnage(joueur);
 	
-	//ajout du multipad !!!!!EN COURS DE DEV!!!!!!
-	//multiPad = new MultiPad("resources/images/multipad.png");
 	
 	//on charge les options du jeu personnalisées par le joueur (stockées en Local Storage)
-	optionsData = new OptionStorage();
+	optionsData = new OptionStorage(); 
+	
+	if( navigator.userAgent.match(/Android/i) ||
+ 		navigator.userAgent.match(/webOS/i) ||
+ 		navigator.userAgent.match(/iPhone/i) || 
+ 		navigator.userAgent.match(/iPod/i) || 
+ 		navigator.userAgent.match(/firefoxOS/i) || 1
+		){ 
+ 			multiPad = new MultiPad("resources/images/D-pad.png","resources/images/action-button.png",joueur);
+ 			//multiPad.render();
+		}
+	
+	
 }
 
 Game.prototype.pressdown = function (e){
@@ -178,7 +188,7 @@ Game.prototype.render = function () {
 	ctx.fillRect(0,0,screenWidth,screenHeight);
 	ctx.fillStyle = "rgb(250, 250, 250)";
 	map.dessinerMap(ctx);
-	//multiPad.render();
+	multiPad.render();
 	ctx.fillStyle = "red";
 	ctx.font = "10px SquareFont";
 

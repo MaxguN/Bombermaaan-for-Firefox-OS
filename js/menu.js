@@ -1,5 +1,5 @@
 function Menu() {
-	//document.getElementById("title").play();
+	document.getElementById("title").play();
 //	addEventListener("click", function (e) {
 //	e.stopPropagation();
 //	clickablet();
@@ -10,7 +10,7 @@ function Menu() {
 
 Menu.prototype.launchGame = function () {
 	game = new Game();
-	//document.getElementById("title").pause();
+	document.getElementById("title").pause();
 	currentObject = game;
 	
 }
@@ -83,7 +83,6 @@ Menu.prototype.update = function (modifier) {
 	if (keysDown[keys.space]) { // Player holding space
 		if(selectValue === 1){
 			this.launchGame();
-			console.log('jeux lancé');
 		}
 		
 		if(selectValue === 2){

@@ -1,28 +1,41 @@
 function Menu() {
 	document.getElementById("title").play();
 	theMenu = this;
-	addEventListener("click", function (e) {
-	e.stopPropagation();
-	theMenu.updateByClick(e);
-}, false);
-
+// 	addEventListener("click", function (e) {
+// 	e.stopPropagation();
+// 	theMenu.updateByClick(e);
+// }, false);
+	this.bind();
 }
+
+Menu.prototype.bind = function() {
+	binder.bind(canvas, "click", function (e) {
+		e.stopPropagation();
+		theMenu.updateByClick(e);
+	}, false);
+};
+
+Menu.prototype.unbind = function() {
+	binder.unbind(canvas, "click");
+};
 
 Menu.prototype.launchGame = function () {
 	game = new Game();
 	document.getElementById("title").pause();
+	this.unbind();
 	currentObject = game;
-	
 }
 
 Menu.prototype.options = function () {
 	options = new Options();
+	this.unbind();
 	currentObject = options;
 
 }
 
 Menu.prototype.scores = function () {
 	scores = new Scores();
+	this.unbind();
 	currentObject = scores;
 
 }
@@ -40,6 +53,7 @@ Menu.prototype.exitGame = function () {
 	canvas.height = screenHeight;
 	
 	currentObject = menu;
+	this.bind();
 }
 
 Menu.prototype.updateByClick = function (event){

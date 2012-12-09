@@ -36,6 +36,7 @@ Scores.prototype.update = function (modifier) {
 	
 	if (keysDown[keys.escape]){
 		currentObject = menu;
+		menu.bind();
 		keysDown[keys.escape] = false;
 	}
 	

@@ -90,6 +90,7 @@ Options.prototype.update = function () {
 	
 	if (keysDown[keys.escape]){
 		currentObject = menu;
+		menu.bind();
 		keysDown[keys.escape] = false;
 	}
 	

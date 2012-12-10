@@ -1,10 +1,6 @@
 function Menu() {
 	document.getElementById("title").play();
 	theMenu = this;
-// 	addEventListener("click", function (e) {
-// 	e.stopPropagation();
-// 	theMenu.updateByClick(e);
-// }, false);
 	this.bind();
 }
 
@@ -13,6 +9,11 @@ Menu.prototype.bind = function() {
 		e.stopPropagation();
 		theMenu.updateByClick(e);
 	}, false);
+
+	binder.bind(canvas, "mousemove", function (e) {
+		e.stopPropagation();
+		theMenu.mouseMouve(e);
+	}, false);
 };
 
 Menu.prototype.unbind = function() {
@@ -20,22 +21,25 @@ Menu.prototype.unbind = function() {
 };
 
 Menu.prototype.launchGame = function () {
+	this.unbind();
 	game = new Game();
 	document.getElementById("title").pause();
-	this.unbind();
+	
 	currentObject = game;
 }
 
 Menu.prototype.options = function () {
-	options = new Options();
 	this.unbind();
+	options = new Options();
+	
 	currentObject = options;
 
 }
 
 Menu.prototype.scores = function () {
-	scores = new Scores();
 	this.unbind();
+	scores = new Scores();
+	
 	currentObject = scores;
 
 }
@@ -45,6 +49,7 @@ Menu.prototype.multiplayer = function() {
 }
 
 Menu.prototype.exitGame = function () {
+	this.bind();
 	game = undefined;
 	
 	screenWidth = 960;
@@ -53,20 +58,35 @@ Menu.prototype.exitGame = function () {
 	canvas.height = screenHeight;
 	
 	currentObject = menu;
-	this.bind();
+	
+}
+
+Menu.prototype.mouseMouve = function(event){
+
+	var computed  = adaptCoords(event.clientX, event.clientY);
+
+	if ((Math.round(computed.x) >= 352 && Math.round(computed.x) <= 603) && (Math.round(computed.y) >= 303 && Math.round(computed.y) <= 330 )){
+		selectValue = 1;
+	}
+	
+	if ((Math.round(computed.x) >= 314 && Math.round(computed.x) <= 639) && (Math.round(computed.y) >= 339 && Math.round(computed.y) <= 363 )){
+		selectValue = 2;
+	}
+	
+	if ((Math.round(computed.x) >= 390 && Math.round(computed.x) <= 564) && (Math.round(computed.y) >= 374 && Math.round(computed.y) <= 398 )){
+		selectValue = 3;
+	}
+	
+	if ((Math.round(computed.x) >= 382 && Math.round(computed.x) <= 573) && (Math.round(computed.y) >= 409 && Math.round(computed.y) <= 432 )){
+		selectValue = 4;
+		
+	}
+
 }
 
 Menu.prototype.updateByClick = function (event){
-	console.log("Le vrai X : " + event.clientX);
-	console.log("Le vrai Y : " + event.clientY);
 	
-	var x = event.clientX;
-	var y = event.clientY;
-	
-	var computed  = adaptCoords(x, y);
-	
-	console.log("X computed: " + Math.round(computed.x));
-	console.log("Y computed: " + Math.round(computed.y));
+	var computed  = adaptCoords(event.clientX, event.clientY);
 	
 	if ((Math.round(computed.x) >= 352 && Math.round(computed.x) <= 603) && (Math.round(computed.y) >= 303 && Math.round(computed.y) <= 330 )){
 		this.launchGame();

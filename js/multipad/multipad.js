@@ -24,10 +24,10 @@ function MultiPad(urlPad, urlButton,joueur){
 **/
 MultiPad.prototype.render = function() {
 	ctx.globalAlpha = 0.5;
-	ctx.drawImage(this.pad,20,screenHeight - 100);
+	ctx.drawImage(this.pad,20,screenHeight - 90);
 	
 	//not pusshed
-	ctx.drawImage(this.button, 65, 0,  64, 64,screenWidth - 85,screenHeight - 85, 64,64 );
+	ctx.drawImage(this.button, 65, 0,  64, 64,screenWidth - 85,screenHeight - 75, 64,64 );
 	
 	ctx.globalAlpha = 1;
 }

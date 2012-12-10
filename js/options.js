@@ -1,15 +1,24 @@
 var optionSelected = 1;
-
 function Options() {
-	optionsData = new OptionStorage();
 	theOptions = this;
-	//addEventListener("click", function (e) {
-	//e.stopPropagation();
-	//theOptions.updateByClick(e);
+	theOptions.bind();
+	optionsData = new OptionStorage();
+	
 }
 
+Options.prototype.bind = function() {
+	binder.bind(canvas, "click", function (e) {
+		console.log("click capté");
+		e.stopPropagation();
+		theOptions.updateByClick(e);
+	}, false);
+};
 
-/*Options.prototype.updateByClick = function (event){
+Options.prototype.unbind = function() {
+	binder.unbind(canvas, "click");
+};
+
+Options.prototype.updateByClick = function (event){
 	console.log("Le vrai X : " + event.clientX);
 	console.log("Le vrai Y : " + event.clientY);
 	
@@ -20,8 +29,8 @@ function Options() {
 	
 	console.log("X computed: " + Math.round(computed.x));
 	console.log("Y computed: " + Math.round(computed.y));
-	
-	if ((Math.round(computed.x) >= 352 && Math.round(computed.x) <= 603) && (Math.round(computed.y) >= 303 && Math.round(computed.y) <= 330 )){
+
+	/*if ((Math.round(computed.x) >= 352 && Math.round(computed.x) <= 603) && (Math.round(computed.y) >= 303 && Math.round(computed.y) <= 330 )){
 		this.launchGame();
 	}
 	
@@ -35,9 +44,12 @@ function Options() {
 	
 	if ((Math.round(computed.x) >= 382 && Math.round(computed.x) <= 573) && (Math.round(computed.y) >= 409 && Math.round(computed.y) <= 432 )){
 		this.options();
-	}
+		
+	}*/
+
+	
 }
-*/
+
 
 Options.prototype.update = function () {
 	if (keysDown[keys.up]) { // Player holding up
@@ -112,11 +124,11 @@ Options.prototype.render = function () {
 	ctx.textBaseline = "center";
 	
 	switch(optionSelected) {
-		case 1: ctx.fillText(" Pad :  <"+optionsData.loadPad()+">", screenWidth/2,300);
+		case 1: ctx.fillText(" Sound :  <"+optionsData.loadPad()+">", screenWidth/2,300);
 				ctx.fillText(" Nickname : "+optionsData.loadNickName()+"", screenWidth/2,335);
 				ctx.fillText(" Exit ", screenWidth/2,370);
 				break;
-		case 2: ctx.fillText(" Pad : "+optionsData.loadPad()+"", screenWidth/2,300);
+		case 2: ctx.fillText(" Sound : "+optionsData.loadPad()+"", screenWidth/2,300);
 				ctx.fillText(" Nickname : <"+optionsData.loadNickName()+">", screenWidth/2,335);
 				ctx.fillText(" Exit ", screenWidth/2,370);
 				break;			

@@ -11,8 +11,6 @@ function Game() {
 	screenHeight = map.getHauteur() * 32;
 	canvas.width = screenWidth;
 	canvas.height = screenHeight;
-
-
  
 	//début de définition des variables
 	// Création de l'objet XmlHttpRequest
@@ -38,26 +36,63 @@ function Game() {
 	//on charge les options du jeu personnalisées par le joueur (stockées en Local Storage)
 	optionsData = new OptionStorage(); 
 	
+	//on detecte le type de device
 	if( navigator.userAgent.match(/Android/i) ||
  		navigator.userAgent.match(/webOS/i) ||
  		navigator.userAgent.match(/iPhone/i) || 
  		navigator.userAgent.match(/iPod/i) || 
- 		navigator.userAgent.match(/firefoxOS/i) || 1
+ 		navigator.userAgent.match(/firefoxOS/i) || 1 //on set à 1 pour que la condition soit vrai (pour le dev)
 		){ 
  			multiPad = new MultiPad(varProperties.pad,varProperties.button,joueur);
- 			//multiPad.render();
-		}
-	
+ 			theGame = this;
+ 			this.bind();
+		}	
 	
 }
 
-Game.prototype.pressdown = function (e){
-	consol.log("Touch event down");
+Game.prototype.bind = function() {
+	binder.bind(canvas, "click", function (e) {
+		e.stopPropagation();
+		theGame.updateByClick(e);
+	}, false);
+};
+
+Game.prototype.unbind = function() {
+	binder.unbind(canvas, "click");
+};
+
+Game.prototype.updateByClick = function (event){
+	console.log("Le vrai X : " + event.clientX);
+	console.log("Le vrai Y : " + event.clientY);
+	
+	var x = event.clientX;
+	var y = event.clientY;
+	
+	var computed  = adaptCoords(x, y);
+	
+	console.log("X computed: " + Math.round(computed.x));
+	console.log("Y computed: " + Math.round(computed.y));
+
+	/*if ((Math.round(computed.x) >= 352 && Math.round(computed.x) <= 603) && (Math.round(computed.y) >= 303 && Math.round(computed.y) <= 330 )){
+		this.launchGame();
+	}
+	
+	if ((Math.round(computed.x) >= 314 && Math.round(computed.x) <= 639) && (Math.round(computed.y) >= 339 && Math.round(computed.y) <= 363 )){
+		this.multiplayer();
+	}
+	
+	if ((Math.round(computed.x) >= 390 && Math.round(computed.x) <= 564) && (Math.round(computed.y) >= 374 && Math.round(computed.y) <= 398 )){
+		this.scores();
+	}
+	
+	if ((Math.round(computed.x) >= 382 && Math.round(computed.x) <= 573) && (Math.round(computed.y) >= 409 && Math.round(computed.y) <= 432 )){
+		this.options();
+		
+	}*/
+
+	
 }
 
-Game.prototype.pressdown = function (e){
-	consol.log("Touch event up ");
-}
 
 var action = {"haut":false,"bas":false,"gauche":false,"droite":false};
 
@@ -189,11 +224,20 @@ Game.prototype.render = function () {
 	ctx.fillRect(0,0,screenWidth,screenHeight);
 	ctx.fillStyle = "rgb(250, 250, 250)";
 	map.dessinerMap(ctx);
-	multiPad.render();
+
+	//si le multipad a été init
+	if(multiPad != null){
+		multiPad.render();
+	}
+
+	//affichage du nickname du joueur
 	ctx.fillStyle = "red";
 	ctx.font = "10px SquareFont";
+	ctx.fillText(optionsData.loadNickName(), 45 ,10);
 
-	ctx.fillText(optionsData.loadNickName(), 45 ,20);
-	
+	//affichage du Exit
+	ctx.fillStyle = "black";
+	ctx.font = "15px SquareFont";
+	ctx.fillText("Exit", screenWidth/2 ,screenHeight - 50);
 	
 }

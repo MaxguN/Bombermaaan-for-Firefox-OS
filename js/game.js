@@ -3,7 +3,6 @@ var nomFichierVariables = 'resources/variables.json';
 var map;
 var multiPad;
 
-
 function Game() {
 
 	map = new Map("map");//Initialisation des maps
@@ -51,15 +50,16 @@ function Game() {
 }
 
 Game.prototype.bind = function() {
-	binder.bind(canvas, "click", function (e) {
+	binder.bind(canvas, "mousedown", function (e) {
 		e.stopPropagation();
 		theGame.updateByClick(e);
 	}, false);
 };
 
 Game.prototype.unbind = function() {
-	binder.unbind(canvas, "click");
+	binder.unbind(canvas, "mousedown");
 };
+
 
 Game.prototype.updateByClick = function (event){
 	console.log("Le vrai X : " + event.clientX);
@@ -73,22 +73,41 @@ Game.prototype.updateByClick = function (event){
 	console.log("X computed: " + Math.round(computed.x));
 	console.log("Y computed: " + Math.round(computed.y));
 
-	/*if ((Math.round(computed.x) >= 352 && Math.round(computed.x) <= 603) && (Math.round(computed.y) >= 303 && Math.round(computed.y) <= 330 )){
-		this.launchGame();
+
+
+	//déplacement
+	if ((Math.round(computed.x) >= 49 && Math.round(computed.x) <= 71) && (Math.round(computed.y) >= 391 && Math.round(computed.y) <= 415 )){
+		joueur.deplacer(DIRECTION.HAUT, map);
 	}
 	
-	if ((Math.round(computed.x) >= 314 && Math.round(computed.x) <= 639) && (Math.round(computed.y) >= 339 && Math.round(computed.y) <= 363 )){
-		this.multiplayer();
+	if ((Math.round(computed.x) >= 21 && Math.round(computed.x) <= 49) && (Math.round(computed.y) >= 417 && Math.round(computed.y) <= 440 )){
+		joueur.deplacer(DIRECTION.GAUCHE, map);
 	}
 	
-	if ((Math.round(computed.x) >= 390 && Math.round(computed.x) <= 564) && (Math.round(computed.y) >= 374 && Math.round(computed.y) <= 398 )){
-		this.scores();
+	if ((Math.round(computed.x) >= 49 && Math.round(computed.x) <= 71) && (Math.round(computed.y) >= 440 && Math.round(computed.y) <= 466 )){
+		joueur.deplacer(DIRECTION.BAS, map);
 	}
 	
-	if ((Math.round(computed.x) >= 382 && Math.round(computed.x) <= 573) && (Math.round(computed.y) >= 409 && Math.round(computed.y) <= 432 )){
-		this.options();
+	if ((Math.round(computed.x) >= 72 && Math.round(computed.x) <= 99) && (Math.round(computed.y) >= 418 && Math.round(computed.y) <= 441 )){
+		joueur.deplacer(DIRECTION.DROITE, map);
 		
-	}*/
+	}
+
+	//Exit
+	if ((Math.round(computed.x) >= 402 && Math.round(computed.x) <= 453) && (Math.round(computed.y) >= 409 && Math.round(computed.y) <= 462 )){
+		console.log("bomb");
+	}
+
+	//Exit
+	if ((Math.round(computed.x) >= 231 && Math.round(computed.x) <= 259) && (Math.round(computed.y) >= 418 && Math.round(computed.y) <= 428 )){
+		joueur = undefined;
+		optionsData = undefined;
+		game = undefined;
+		map = undefined;
+		multiPad = undefined;
+		
+		menu.exitGame();
+	}
 
 	
 }
@@ -197,7 +216,7 @@ Game.prototype.event = function () {
 	}
 	
 	if (keysDown[keys.space]) {
-	
+		console.log("bomb");
 		keysDown[keys.space] = false;
 	}
 	
@@ -238,6 +257,6 @@ Game.prototype.render = function () {
 	//affichage du Exit
 	ctx.fillStyle = "black";
 	ctx.font = "15px SquareFont";
-	ctx.fillText("Exit", screenWidth/2 ,screenHeight - 50);
+	ctx.fillText("Exit", screenWidth/2 - 10 ,screenHeight - 50);
 	
 }

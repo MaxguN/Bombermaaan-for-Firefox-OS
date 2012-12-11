@@ -8,7 +8,6 @@ function Options() {
 
 Options.prototype.bind = function() {
 	binder.bind(canvas, "click", function (e) {
-		console.log("click capté");
 		e.stopPropagation();
 		theOptions.updateByClick(e);
 	}, false);
@@ -30,23 +29,23 @@ Options.prototype.updateByClick = function (event){
 	console.log("X computed: " + Math.round(computed.x));
 	console.log("Y computed: " + Math.round(computed.y));
 
-	/*if ((Math.round(computed.x) >= 352 && Math.round(computed.x) <= 603) && (Math.round(computed.y) >= 303 && Math.round(computed.y) <= 330 )){
-		this.launchGame();
+	if ((Math.round(computed.x) >= 324 && Math.round(computed.x) <= 651) && (Math.round(computed.y) >= 303 && Math.round(computed.y) <= 330 )){
+		if( optionsData.loadPad() === "Yes"){
+				optionsData.savePad("No");
+			}else if( optionsData.loadPad() === "No") {
+				optionsData.savePad("Yes");
+			}
 	}
 	
-	if ((Math.round(computed.x) >= 314 && Math.round(computed.x) <= 639) && (Math.round(computed.y) >= 339 && Math.round(computed.y) <= 363 )){
+	/*if ((Math.round(computed.x) >= 314 && Math.round(computed.x) <= 639) && (Math.round(computed.y) >= 339 && Math.round(computed.y) <= 363 )){
 		this.multiplayer();
-	}
-	
-	if ((Math.round(computed.x) >= 390 && Math.round(computed.x) <= 564) && (Math.round(computed.y) >= 374 && Math.round(computed.y) <= 398 )){
-		this.scores();
-	}
-	
-	if ((Math.round(computed.x) >= 382 && Math.round(computed.x) <= 573) && (Math.round(computed.y) >= 409 && Math.round(computed.y) <= 432 )){
-		this.options();
-		
 	}*/
+	
+	if ((Math.round(computed.x) >= 428 && Math.round(computed.x) <= 528) && (Math.round(computed.y) >= 374 && Math.round(computed.y) <= 398 )){
+		currentObject = menu;
+		menu.bind();
 
+	}
 	
 }
 

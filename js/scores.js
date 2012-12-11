@@ -1,6 +1,35 @@
-function Scores() {
+var scoreSelected = 1;
 
+function Scores() {
+	theScore = this;
+	theScore.bind();
 }
+
+Scores.prototype.bind = function() {
+	binder.bind(canvas, "click", function (e) {
+		console.log("click capté");
+		e.stopPropagation();
+		theScore.updateByClick(e);
+	}, false);
+};
+
+Scores.prototype.unbind = function() {
+	binder.unbind(canvas, "click");
+};
+
+Scores.prototype.updateByClick = function (event){
+	
+	var computed  = adaptCoords(event.clientX, event.clientY);
+	
+	if ((Math.round(computed.x) >= 428 && Math.round(computed.x) <= 528) && (Math.round(computed.y) >= 374 && Math.round(computed.y) <= 398 )){
+		currentObject = menu;
+		menu.bind();
+
+	}
+	
+}
+
+
 
 Scores.prototype.update = function (modifier) {
 	if (keysDown[keys.up]) { // Player holding up
@@ -56,6 +85,11 @@ Scores.prototype.render = function () {
 	ctx.font = "30px Test";
 	ctx.textAlign = "center";
 	ctx.textBaseline = "center";
+
+	switch(scoreSelected) {
+		case 1: ctx.fillText(" Exit ", screenWidth/2,370);
+				break;		
+	}
 	
 	
 }

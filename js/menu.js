@@ -172,7 +172,7 @@ Menu.prototype.render = function () {
 	ctx.textBaseline = "center";
 	
 	switch(selectValue) {
-		case 1: ctx.drawImage(bomberman, 0, 0, 32, 32, screenWidth/4 , 298, 32, 32)
+		case 1: ctx.drawImage(bomberman, 0, 0, 32, 32, screenWidth/4 , 298, 32, 32);
 				ctx.fillText(" New Game ", screenWidth/2,300);
 				ctx.fillText(" Multiplayer ", screenWidth/2,335);
 				ctx.fillText(" Scores ", screenWidth/2,370);

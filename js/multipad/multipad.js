@@ -18,10 +18,7 @@ function MultiPad(urlPad, urlButton,joueur){
 
 }
 
-/**
-* On affiche le pad
-*
-**/
+
 MultiPad.prototype.render = function() {
 	ctx.globalAlpha = 0.5;
 	ctx.drawImage(this.pad,20,screenHeight - 90);

@@ -4,16 +4,19 @@ function Bomb(url, x, y){
 	this.etatAnimation = -1;
 
 	this.image = new Image();
-	this.image.referenceDuPerso = this;
+	this.image.referenceBomb = this;
 	this.image.onload = function() {
 		if(!this.complete) 
 			throw "Erreur de chargement du sprite nommé \"" + url + "\".";
 		
 		// Taille de la bomb
-		this.referenceDuPerso.largeur = this.width / 4;
-		this.referenceDuPerso.hauteur = this.height / 4;
+		this.referenceBomb.largeur = this.width / 4;
+		this.referenceBomb.hauteur = this.height / 4;
 	}
 	
-	this.image.src = "resources/images/" + url;
+	this.image.src = url;
 }
 
+Bomb.prototype.render = function () {
+	ctx.drawImage(this.image,20,screenHeight - 90);
+}

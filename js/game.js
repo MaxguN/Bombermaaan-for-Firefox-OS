@@ -90,9 +90,8 @@ Game.prototype.updateByClick = function (event){
 		
 	}
 
-	//Exit
 	if ((Math.round(computed.x) >= 402 && Math.round(computed.x) <= 453) && (Math.round(computed.y) >= 409 && Math.round(computed.y) <= 462 )){
-		console.log("bomb");
+		map.addBomb(new Bomb (varProperties.BombeSrc, joueur));
 	}
 
 	//Exit
@@ -213,15 +212,7 @@ Game.prototype.event = function () {
 	}
 	
 	if (keysDown[keys.space]) {
-		console.log("space");
-		var varJsonProperties = xhr.responseText;
-	
-		// Analyse des données
-		//var varProperties = JSON.parse(varJsonProperties);
-		var test = new Image();
-		test.src = 'resources/images/FirefoxBomb.png';
-		var computed  = adaptCoords(200, 200);
-		ctx.drawImage(test, computed.x,computed.y );
+		map.addBomb(new Bomb (varProperties.BombeSrc, joueur));
 		keysDown[keys.space] = false;
 	}
 	

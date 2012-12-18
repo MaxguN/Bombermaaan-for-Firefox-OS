@@ -20,7 +20,7 @@ function MultiPad(urlPad, urlButton,joueur){
 
 
 MultiPad.prototype.render = function() {
-	ctx.globalAlpha = 0.5;
+	ctx.globalAlpha = 1;
 	ctx.drawImage(this.pad,20,screenHeight - 90);
 	
 	//not pusshed

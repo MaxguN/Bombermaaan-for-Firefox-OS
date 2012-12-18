@@ -19,7 +19,9 @@ function Map(nom) {
 	
 	// Liste des personnages présents sur le terrain.
 	this.personnages = new Array();
-
+	
+	// Liste des bombes presentes sur le terrain.
+	this.bombes = new Array();
 	
 	
 }
@@ -39,12 +41,22 @@ Map.prototype.dessinerMap = function(context) {
 			this.tileset.dessinerTile(ligne[j], context, j * varProperties.pixelsUnitaireCarte, y);
 		}
 	}
+		// Dessin des bombes
+	for(var i = 0, l = this.bombes.length ; i < l ; i++) {
+		if (this.bombes[i]!== undefined) this.bombes[i].dessinerBombe(context);
+	}
 	// Dessin des personnages
 	for(var i = 0, l = this.personnages.length ; i < l ; i++) {
 		this.personnages[i].dessinerPersonnage(context);
-}
+	}
+
+	
 }
 // Pour ajouter un personnage
 Map.prototype.addPersonnage = function(perso) {
 	this.personnages.push(perso);
+}
+
+Map.prototype.addBomb = function(bombe) {
+	this.bombes.push(bombe);
 }

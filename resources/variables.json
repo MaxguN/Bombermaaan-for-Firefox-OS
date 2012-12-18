@@ -6,6 +6,8 @@
 	
 	"pixelsUnitaireCarte": "32",
 	
+	"BombeSrc" : "resources/images/arena_bomb.png",
+	
 	
 	"bomb" : "resources/images/FirefoxBomb.png",
 	"personnageUnPositionInitX" : "1",

@@ -96,7 +96,8 @@ Personnage.prototype.dessinerPersonnage = function(context) {
 	this.largeur,
 	this.hauteur, // Taille du rectangle source (c'est la taille du personnage)
 	// Point de destination (dépend de la taille du personnage)
-(this.x * varProperties.pixelsUnitaireCarte) + decalageX, (this.y * varProperties.pixelsUnitaireCarte) - 8 + decalageY,
+	(this.x * varProperties.pixelsUnitaireCarte) + decalageX, 
+	(this.y * varProperties.pixelsUnitaireCarte) - 8 + decalageY,
 	// Point de destination (dépend de la taille du personnage)
 	varProperties.pixelsUnitaireCarte, varProperties.pixelsUnitaireCarte // Taille du rectangle destination (c'est la taille du personnage)
 );

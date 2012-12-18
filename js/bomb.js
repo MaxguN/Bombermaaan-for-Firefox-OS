@@ -1,5 +1,3 @@
-
-
 function Bomb(url, joueur){
 	this.x = joueur.x;
 	this.y = joueur.y;
@@ -35,7 +33,8 @@ Bomb.prototype.dessinerBombe = function (context) {
 	if (this.temps++ >30){
 		if(this.dureeAnimation<4){
 			
-			delete map.bombes[map.bombes.indexOf(this)]
+			delete map.bombes[map.bombes.indexOf(this)];
+			//mettre animation de l'explosion
 			}
 		this.dureeAnimation=this.dureeAnimation/2;
 		this.temps=0;

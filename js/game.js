@@ -7,6 +7,7 @@ var multiPad;
 
 function Game() {
 
+	optionsData = new OptionStorage();
 	map = new Map("map");//Initialisation des maps
 	screenWidth = map.getLargeur() * varProperties.pixelsUnitaireCarte;
 	screenHeight = map.getHauteur() * varProperties.pixelsUnitaireCarte;
@@ -17,7 +18,7 @@ function Game() {
 	
 	
 	//initialisation du personnage
-	joueur = new Personnage(varProperties.personnageSrc, varProperties.personnageUnPositionInitX, varProperties.personnageUnPositionInitY, DIRECTION.BAS, COULEUR.BLANC);
+	joueur = new Personnage(varProperties.personnageSrc, varProperties.personnageUnPositionInitX, varProperties.personnageUnPositionInitY, DIRECTION.BAS, optionsData.loadColor());
 	map.addPersonnage(joueur);
 
 	joueur2 = new Personnage(varProperties.personnageSrc, varProperties.personnageDeuxPositionInitX, varProperties.personnageDeuxPositionInitY, DIRECTION.BAS, COULEUR.VERT);

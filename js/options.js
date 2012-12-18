@@ -1,6 +1,8 @@
 var optionSelected = 1;
 
 var colorTab = ["BLANC", "NOIR", "ROUGE", "BLEU", "VERT"];
+var colorTabTaille = 4;
+
 function Options() {
 	theOptions = this;
 	theOptions.bind();
@@ -47,9 +49,10 @@ Options.prototype.updateByClick = function (event){
 	
 
 
-	/*if ((Math.round(computed.x) >= 314 && Math.round(computed.x) <= 639) && (Math.round(computed.y) >= 339 && Math.round(computed.y) <= 363 )){
-		this.multiplayer();
-	}*/
+	if ((Math.round(computed.x) >= 302 && Math.round(computed.x) <= 673) && (Math.round(computed.y) >= 374 && Math.round(computed.y) <= 398 )){
+
+		
+	}
 	
 	if ((Math.round(computed.x) >= 428 && Math.round(computed.x) <= 528) && (Math.round(computed.y) >= 405 && Math.round(computed.y) <= 425 )){
 		currentObject = menu;
@@ -109,6 +112,23 @@ Options.prototype.update = function () {
 			}
 		
 		}
+
+
+		if (optionSelected === 3 ){
+			var i = optionsData.loadColor();
+			//console.log(i);
+			if(i <= 0){
+				i = colorTabTaille; 
+				optionsData.saveColor(i);
+			}else {
+				i--;
+				optionsData.saveColor(i);
+			}
+
+			//optionsData.saveColor(optionsData.loadColor()++]);
+		
+		}
+
 		keysDown[keys.left] = false;
 	}
 	if (keysDown[keys.right]) { // Player holding right
@@ -118,6 +138,21 @@ Options.prototype.update = function () {
 			}else if( optionsData.loadSound() === "No") {
 				optionsData.saveSound("Yes");
 			}
+		
+		}
+
+		if (optionSelected === 3 ){
+			var i = optionsData.loadColor();
+			//console.log(i);
+			if(i >= colorTabTaille){
+				i = 0; 
+				optionsData.saveColor(i);
+			}else {
+				i++;
+				optionsData.saveColor(i);
+			}
+
+			//optionsData.saveColor(optionsData.loadColor()++]);
 		
 		}
 		keysDown[keys.right] = false;

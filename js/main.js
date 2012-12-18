@@ -3,19 +3,18 @@ var optionsData; //l'objet qui set les options dÈfinies par le joueur.
 var xhr;
 
 //début de définition des variables
-	// Création de l'objet XmlHttpRequest
-	 xhr = getXMLHttpRequest();
-
-	// Chargement du fichier
-	xhr.open("GET", nomFichierVariables, false);
-	xhr.send(null);
-	if(xhr.readyState != 4 || (xhr.status != 200 && xhr.status != 0)) // Code == 0 en local
-		throw new Error("Impossible de charger le fichier de propriétés nommée \"" + nomFichierVariables + "\" (code HTTP : " + xhr.status + ").");
-	var varJsonProperties = xhr.responseText;
+// Création de l'objet XmlHttpRequest
+xhr = getXMLHttpRequest();
+// Chargement du fichier
+xhr.open("GET", nomFichierVariables, false);
+xhr.send(null);
+if(xhr.readyState != 4 || (xhr.status != 200 && xhr.status != 0)) // Code == 0 en local
+throw new Error("Impossible de charger le fichier de propriétés nommée \"" + nomFichierVariables + "\" (code HTTP : " + xhr.status + ").");
+var varJsonProperties = xhr.responseText;
 	
-	// Analyse des données
-	var varProperties = JSON.parse(varJsonProperties);
-	//fin de définition des variables
+// Analyse des données
+var varProperties = JSON.parse(varJsonProperties);
+//fin de définition des variables
 
 var bomberman = new Image();
 bomberman.src = "resources/images/bomberman.png";

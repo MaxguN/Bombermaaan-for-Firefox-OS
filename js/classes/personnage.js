@@ -1,19 +1,29 @@
 var DIRECTION = {
-	"BAS"    : 0,
-	"GAUCHE" : 1,
-	"DROITE" : 2,
-	"HAUT"   : 3
+	"BAS"    : 1,
+	"GAUCHE" : 7,
+	"DROITE" : 4,
+	"HAUT"   : 10
+}
+
+var COULEUR = {
+	"BLANC"    : 0,
+	"NOIR" : 1,
+	"ROUGE" : 2,
+	"BLEU"   : 3,
+	"VERT"   : 4
+
 }
 
 var DUREE_ANIMATION = 4;
 var DUREE_DEPLACEMENT = 16 ;
 
 
-function Personnage(url, x, y, direction) {
+function Personnage(url, x, y, direction, couleur) {
 	this.x = x; // (en cases)
 	this.y = y; // (en cases)
 	this.direction = direction;
 	this.etatAnimation = -1;
+	this.couleur = couleur;
 	
 	// Chargement de l'image dans l'attribut image
 	this.image = new Image();
@@ -23,14 +33,14 @@ function Personnage(url, x, y, direction) {
 			throw "Erreur de chargement du sprite nommé \"" + url + "\".";
 		
 		// Taille du personnage
-		this.referenceDuPerso.largeur = this.width / 4;
-		this.referenceDuPerso.hauteur = this.height / 4;
+		this.referenceDuPerso.largeur = this.width / varProperties.nombreColonnesPerso; //12
+		this.referenceDuPerso.hauteur = this.height / varProperties.nombreLignesPerso;
 	}
 	this.image.src = url;
 }
 
 Personnage.prototype.dessinerPersonnage = function(context) {
-	var frame = 0; // Numéro de l'image à prendre pour l'animation
+	var frame = eval(varProperties.imageInitPerso); // Numéro de l'image à prendre pour l'animation
 	var decalageX = 0, decalageY = 0; // Décalage à appliquer à la position du personnage
 	if(this.etatAnimation >= DUREE_DEPLACEMENT) {
 		// Si le déplacement a atteint ou dépassé le temps nécessaire pour s'effectuer, on le termine
@@ -43,7 +53,7 @@ Personnage.prototype.dessinerPersonnage = function(context) {
 		}
 	
 		// Nombre de pixels restant à parcourir entre les deux cases
-		var pixelsAParcourir = 32 - (32 * (this.etatAnimation / DUREE_DEPLACEMENT));
+		var pixelsAParcourir = varProperties.pixelsUnitaireCarte - (varProperties.pixelsUnitaireCarte * (this.etatAnimation / DUREE_DEPLACEMENT));
 	
 		// À partir de ce nombre, on définit le décalage en x et y.
 		// NOTE : Si vous connaissez une manière plus élégante que ces quatre conditions, je suis preneur
@@ -65,16 +75,30 @@ Personnage.prototype.dessinerPersonnage = function(context) {
  * frame, decalageX et decalageY
  */
 
+	var imageMouvement = function imageMouvement(){
+	switch(frame) {
+			case 0 : return 1;
+			break;
+			case 1 : return 0;
+			break;
+			case 2 : return -1;
+			break;
+			case 3 : return 0;
+			break;
+	
+		}
+	}
+	
 	context.drawImage(
 	this.image, 
-	this.largeur * frame, 
-	this.direction * this.hauteur, // Point d'origine du rectangle source à prendre dans notre image
+	this.largeur*(imageMouvement()+this.direction), 
+	this.hauteur*this.couleur, // Point d'origine du rectangle source à prendre dans notre image
 	this.largeur,
 	this.hauteur, // Taille du rectangle source (c'est la taille du personnage)
 	// Point de destination (dépend de la taille du personnage)
-(this.x * 32) - (this.largeur / 2) + 16 + decalageX, (this.y * 32) - this.hauteur + 24 + decalageY,
+(this.x * varProperties.pixelsUnitaireCarte) + decalageX, (this.y * varProperties.pixelsUnitaireCarte) - 8 + decalageY,
 	// Point de destination (dépend de la taille du personnage)
-	this.largeur, this.hauteur // Taille du rectangle destination (c'est la taille du personnage)
+	varProperties.pixelsUnitaireCarte, varProperties.pixelsUnitaireCarte // Taille du rectangle destination (c'est la taille du personnage)
 );
 }
 

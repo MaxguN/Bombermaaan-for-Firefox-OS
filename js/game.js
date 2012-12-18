@@ -3,36 +3,24 @@ var joueur2;
 var nomFichierVariables = 'resources/variables.json';
 var map;
 var multiPad;
-var xhr;
+
+
 function Game() {
 
 	map = new Map("map");//Initialisation des maps
-	screenWidth = map.getLargeur() * 32;
-	screenHeight = map.getHauteur() * 32;
+	screenWidth = map.getLargeur() * varProperties.pixelsUnitaireCarte;
+	screenHeight = map.getHauteur() * varProperties.pixelsUnitaireCarte;
 	canvas.width = screenWidth;
 	canvas.height = screenHeight;
  
-	//début de définition des variables
-	// Création de l'objet XmlHttpRequest
-	 xhr = getXMLHttpRequest();
-
-	// Chargement du fichier
-	xhr.open("GET", nomFichierVariables, false);
-	xhr.send(null);
-	if(xhr.readyState != 4 || (xhr.status != 200 && xhr.status != 0)) // Code == 0 en local
-		throw new Error("Impossible de charger le fichier de propriétés nommée \"" + nomFichierVariables + "\" (code HTTP : " + xhr.status + ").");
-	var varJsonProperties = xhr.responseText;
 	
-	// Analyse des données
-	var varProperties = JSON.parse(varJsonProperties);
-	//fin de définition des variables
 	
 	
 	//initialisation du personnage
-	joueur = new Personnage(varProperties.personnageBleuSrc, varProperties.personnageBleuPositionInitX, varProperties.personnageBleuPositionInitY, DIRECTION.BAS);
+	joueur = new Personnage(varProperties.personnageSrc, varProperties.personnageUnPositionInitX, varProperties.personnageUnPositionInitY, DIRECTION.BAS, COULEUR.BLANC);
 	map.addPersonnage(joueur);
 
-	joueur2 = new Personnage(varProperties.personnageBleuSrc, varProperties.personnageRougePositionInitX, varProperties.personnageRougePositionInitY, DIRECTION.BAS);
+	joueur2 = new Personnage(varProperties.personnageSrc, varProperties.personnageDeuxPositionInitX, varProperties.personnageDeuxPositionInitY, DIRECTION.BAS, COULEUR.VERT);
 	map.addPersonnage(joueur2);
 
 	

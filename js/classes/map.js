@@ -34,9 +34,9 @@ Map.prototype.getLargeur = function() {
 Map.prototype.dessinerMap = function(context) {
 	for(var i = 0, l = this.terrain.length ; i < l ; i++) {
 		var ligne = this.terrain[i];
-		var y = i * 32;
+		var y = i * varProperties.pixelsUnitaireCarte;
 		for(var j = 0, k = ligne.length ; j < k ; j++) {
-			this.tileset.dessinerTile(ligne[j], context, j * 32, y);
+			this.tileset.dessinerTile(ligne[j], context, j * varProperties.pixelsUnitaireCarte, y);
 		}
 	}
 	// Dessin des personnages

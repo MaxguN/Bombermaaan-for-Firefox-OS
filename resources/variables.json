@@ -1,10 +1,17 @@
 {
-	"personnageBleuSrc" : "resources/images/bomberman.png",
+	"personnageSrc" : "resources/images/arena_bomber_walk.png",
+	"nombreColonnesPerso" : "12",
+	"nombreLignesPerso" : "7",
+	"imageInitPerso" : "1",
+	
+	"pixelsUnitaireCarte": "32",
+	
+	
 	"bomb" : "resources/images/FirefoxBomb.png",
-	"personnageBleuPositionInitX" : "1",
-	"personnageBleuPositionInitY" : "2",
-	"personnageRougePositionInitX" : "13",
-	"personnageRougePositionInitY" : "11",
+	"personnageUnPositionInitX" : "1",
+	"personnageUnPositionInitY" : "2",
+	"personnageDeuxPositionInitX" : "13",
+	"personnageDeuxPositionInitY" : "11",
 	"pad" : "resources/images/D-pad.png",
 	"button" : "resources/images/action-button.png"
 }

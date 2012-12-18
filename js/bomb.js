@@ -15,8 +15,10 @@ function Bomb(url, x, y){
 	}
 	
 	this.image.src = url;
+	
 }
 
 Bomb.prototype.render = function () {
-	ctx.drawImage(this.image,20,screenHeight - 90);
+	console.log("on pose une bombe " + this.x, this.y);
+	ctx.drawImage(this.image, this.x,this.y );
 }

@@ -1,7 +1,10 @@
 {
 	"personnageBleuSrc" : "resources/images/bomberman.png",
+	"bomb" : "resources/images/FirefoxBomb.png",
 	"personnageBleuPositionInitX" : "1",
 	"personnageBleuPositionInitY" : "2",
+	"personnageRougePositionInitX" : "13",
+	"personnageRougePositionInitY" : "11",
 	"pad" : "resources/images/D-pad.png",
 	"button" : "resources/images/action-button.png"
 }

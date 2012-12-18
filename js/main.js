@@ -20,6 +20,14 @@ var xhr;
 var bomberman = new Image();
 bomberman.src = "resources/images/bomberman.png";
 
+var COULEUR = {
+	"BLANC"    : 0,
+	"NOIR" : 1,
+	"ROUGE" : 2,
+	"BLEU"   : 3,
+	"VERT"   : 4
+
+}
 
 // Handle keyboard controls
 var keysDown = {};

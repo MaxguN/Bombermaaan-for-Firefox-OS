@@ -5,14 +5,6 @@ var DIRECTION = {
 	"HAUT"   : 10
 }
 
-var COULEUR = {
-	"BLANC"    : 0,
-	"NOIR" : 1,
-	"ROUGE" : 2,
-	"BLEU"   : 3,
-	"VERT"   : 4
-
-}
 
 var DUREE_ANIMATION = 4;
 var DUREE_DEPLACEMENT = 16 ;

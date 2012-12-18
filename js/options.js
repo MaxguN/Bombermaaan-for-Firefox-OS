@@ -1,4 +1,6 @@
 var optionSelected = 1;
+
+var colorTab = ["BLANC", "NOIR", "ROUGE", "BLEU", "VERT"];
 function Options() {
 	theOptions = this;
 	theOptions.bind();
@@ -34,19 +36,22 @@ Options.prototype.updateByClick = function (event){
 	console.log("X computed: " + Math.round(computed.x));
 	console.log("Y computed: " + Math.round(computed.y));
 
+	//on gère le
 	if ((Math.round(computed.x) >= 324 && Math.round(computed.x) <= 651) && (Math.round(computed.y) >= 303 && Math.round(computed.y) <= 330 )){
-		if( optionsData.loadPad() === "Yes"){
-				optionsData.savePad("No");
-			}else if( optionsData.loadPad() === "No") {
-				optionsData.savePad("Yes");
+		if( optionsData.loadSound() === "Yes"){
+				optionsData.saveSound("No");
+			}else if( optionsData.loadSound() === "No") {
+				optionsData.saveSound("Yes");
 			}
 	}
 	
+
+
 	/*if ((Math.round(computed.x) >= 314 && Math.round(computed.x) <= 639) && (Math.round(computed.y) >= 339 && Math.round(computed.y) <= 363 )){
 		this.multiplayer();
 	}*/
 	
-	if ((Math.round(computed.x) >= 428 && Math.round(computed.x) <= 528) && (Math.round(computed.y) >= 374 && Math.round(computed.y) <= 398 )){
+	if ((Math.round(computed.x) >= 428 && Math.round(computed.x) <= 528) && (Math.round(computed.y) >= 405 && Math.round(computed.y) <= 425 )){
 		currentObject = menu;
 		menu.bind();
 
@@ -66,9 +71,14 @@ Options.prototype.mouseMouve = function(event){
 		optionSelected = 2;
 	}
 	
-	if ((Math.round(computed.x) >= 428 && Math.round(computed.x) <= 528) && (Math.round(computed.y) >= 374 && Math.round(computed.y) <= 398 )){
+	if ((Math.round(computed.x) >= 302 && Math.round(computed.x) <= 673) && (Math.round(computed.y) >= 374 && Math.round(computed.y) <= 398 )){
 
 		optionSelected = 3;
+	}
+
+	if ((Math.round(computed.x) >= 413 && Math.round(computed.x) <= 550) && (Math.round(computed.y) >= 405 && Math.round(computed.y) <= 425 )){
+
+		optionSelected = 4;
 	}
 	
 
@@ -85,17 +95,17 @@ Options.prototype.update = function () {
 	}
 	if (keysDown[keys.down]) { // Player holding down
 		
-		if(optionSelected < 3){
+		if(optionSelected < 4){
 			optionSelected++;
 		}
 		keysDown[keys.down] = false;
 	}
 	if (keysDown[keys.left]) { // Player holding left
 		if (optionSelected === 1 ){
-			if( optionsData.loadPad() === "Yes"){
-				optionsData.savePad("No");
-			}else if( optionsData.loadPad() === "No") {
-				optionsData.savePad("Yes");
+			if( optionsData.loadSound() === "Yes"){
+				optionsData.saveSound("No");
+			}else if( optionsData.loadSound() === "No") {
+				optionsData.saveSound("Yes");
 			}
 		
 		}
@@ -103,10 +113,10 @@ Options.prototype.update = function () {
 	}
 	if (keysDown[keys.right]) { // Player holding right
 		if (optionSelected === 1 ){
-			if( optionsData.loadPad() === "Yes"){
-				optionsData.savePad("No");
-			}else if( optionsData.loadPad() === "No") {
-				optionsData.savePad("Yes");
+			if( optionsData.loadSound() === "Yes"){
+				optionsData.saveSound("No");
+			}else if( optionsData.loadSound() === "No") {
+				optionsData.saveSound("Yes");
 			}
 		
 		}
@@ -114,10 +124,12 @@ Options.prototype.update = function () {
 	}
 	
 	if (keysDown[keys.space]) { // Player holding space
-		keysDown[keys.space] = false;
-		if (optionSelected === 1 ){
-			
+		
+		if (optionSelected === 4 ){
+			currentObject = menu;
+			menu.bind();
 		}
+		keysDown[keys.space] = false;
 	}
 	
 	if (keysDown[keys.enter]) { // Player holding enter
@@ -125,8 +137,7 @@ Options.prototype.update = function () {
 	}
 	
 	if (keysDown[keys.escape]){
-		currentObject = menu;
-		menu.bind();
+		
 		keysDown[keys.escape] = false;
 	}
 	
@@ -149,20 +160,29 @@ Options.prototype.render = function () {
 	
 	switch(optionSelected) {
 		case 1: ctx.drawImage(bomberman, 0, 0, 32, 32, screenWidth/5 , 298, 32, 32);
-				ctx.fillText(" Sound :  <"+optionsData.loadPad()+">", screenWidth/2,300);
+				ctx.fillText(" Sound :  <"+optionsData.loadSound()+">", screenWidth/2,300);
 				ctx.fillText(" Nickname : "+optionsData.loadNickName()+"", screenWidth/2,335);
-				ctx.fillText(" Exit ", screenWidth/2,370);
+				ctx.fillText(" Color : "+colorTab[optionsData.loadColor()]+"", screenWidth/2,370);
+				ctx.fillText(" Exit ", screenWidth/2,405);
 				break;
 		case 2: ctx.drawImage(bomberman, 0, 0, 32, 32, screenWidth/5 , 333, 32, 32);
-				ctx.fillText(" Sound : "+optionsData.loadPad()+"", screenWidth/2,300);
+				ctx.fillText(" Sound : "+optionsData.loadSound()+"", screenWidth/2,300);
 				ctx.fillText(" Nickname : <"+optionsData.loadNickName()+">", screenWidth/2,335);
-				ctx.fillText(" Exit ", screenWidth/2,370);
+				ctx.fillText(" Color : "+colorTab[optionsData.loadColor()]+"", screenWidth/2,370);
+				ctx.fillText(" Exit ", screenWidth/2,405);
 				break;	
 		case 3: ctx.drawImage(bomberman, 0, 0, 32, 32, screenWidth/5 , 368, 32, 32);
-				ctx.fillText(" Sound : "+optionsData.loadPad()+"", screenWidth/2,300);
-				ctx.fillText(" Nickname : <"+optionsData.loadNickName()+">", screenWidth/2,335);
-				ctx.fillText(" Exit ", screenWidth/2,370);
-				break;					
+				ctx.fillText(" Sound : "+optionsData.loadSound()+"", screenWidth/2,300);
+				ctx.fillText(" Nickname : "+optionsData.loadNickName()+"", screenWidth/2,335);
+				ctx.fillText(" Color : <"+colorTab[optionsData.loadColor()]+">", screenWidth/2,370);
+				ctx.fillText(" Exit ", screenWidth/2,405);	
+				break;
+		case 4: ctx.drawImage(bomberman, 0, 0, 32, 32, screenWidth/5 , 368, 32, 32);
+				ctx.fillText(" Sound : "+optionsData.loadSound()+"", screenWidth/2,300);
+				ctx.fillText(" Nickname : "+optionsData.loadNickName()+"", screenWidth/2,335);
+				ctx.fillText(" Color : "+colorTab[optionsData.loadColor()]+"", screenWidth/2,370);
+				ctx.fillText(" <Exit> ", screenWidth/2,405);		
+				break;				
 	}
 	
 	

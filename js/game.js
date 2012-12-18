@@ -1,8 +1,9 @@
 var joueur;
+var joueur2;
 var nomFichierVariables = 'resources/variables.json';
 var map;
 var multiPad;
-
+var xhr;
 function Game() {
 
 	map = new Map("map");//Initialisation des maps
@@ -13,7 +14,7 @@ function Game() {
  
 	//début de définition des variables
 	// Création de l'objet XmlHttpRequest
-	var xhr = getXMLHttpRequest();
+	 xhr = getXMLHttpRequest();
 
 	// Chargement du fichier
 	xhr.open("GET", nomFichierVariables, false);
@@ -30,6 +31,10 @@ function Game() {
 	//initialisation du personnage
 	joueur = new Personnage(varProperties.personnageBleuSrc, varProperties.personnageBleuPositionInitX, varProperties.personnageBleuPositionInitY, DIRECTION.BAS);
 	map.addPersonnage(joueur);
+
+	joueur2 = new Personnage(varProperties.personnageBleuSrc, varProperties.personnageRougePositionInitX, varProperties.personnageRougePositionInitY, DIRECTION.BAS);
+	map.addPersonnage(joueur2);
+
 	
 	
 	//on charge les options du jeu personnalisées par le joueur (stockées en Local Storage)
@@ -54,6 +59,10 @@ Game.prototype.bind = function() {
 		e.stopPropagation();
 		theGame.updateByClick(e);
 	}, false);
+	binder.bind(canvas, "mouseup", function (e) {
+		e.stopPropagation();
+		theGame.updateByClick(e);
+	}, false);
 };
 
 Game.prototype.unbind = function() {
@@ -62,16 +71,16 @@ Game.prototype.unbind = function() {
 
 
 Game.prototype.updateByClick = function (event){
-	console.log("Le vrai X : " + event.clientX);
-	console.log("Le vrai Y : " + event.clientY);
+	//console.log("Le vrai X : " + event.clientX);
+	//console.log("Le vrai Y : " + event.clientY);
 	
 	var x = event.clientX;
 	var y = event.clientY;
 	
 	var computed  = adaptCoords(x, y);
 	
-	console.log("X computed: " + Math.round(computed.x));
-	console.log("Y computed: " + Math.round(computed.y));
+	//console.log("X computed: " + Math.round(computed.x));
+	//console.log("Y computed: " + Math.round(computed.y));
 
 
 
@@ -216,7 +225,15 @@ Game.prototype.event = function () {
 	}
 	
 	if (keysDown[keys.space]) {
-		console.log("bomb");
+		console.log("space");
+		var varJsonProperties = xhr.responseText;
+	
+		// Analyse des données
+		//var varProperties = JSON.parse(varJsonProperties);
+		var test = new Image();
+		test.src = 'resources/images/FirefoxBomb.png';
+		var computed  = adaptCoords(200, 200);
+		ctx.drawImage(test, computed.x,computed.y );
 		keysDown[keys.space] = false;
 	}
 	
@@ -236,6 +253,21 @@ Game.prototype.update = function (length) {
 	}
 	
 	this.render();
+}
+
+Game.prototype.updatePositionAdvsersaire = function(){
+	var randomnumber = Math.round(Math.floor ( Math.random() * 5 ));
+	switch(randomnumber) {
+		case 1: joueur2.deplacer(DIRECTION.HAUT, map);
+				break;
+		case 2: joueur2.deplacer(DIRECTION.DROITE, map);
+				break;
+		case 3: joueur2.deplacer(DIRECTION.BAS, map);
+				break;
+		case 4: joueur2.deplacer(DIRECTION.GAUCHE, map);
+				break;						
+	}
+
 }
 
 Game.prototype.render = function () {
@@ -258,5 +290,7 @@ Game.prototype.render = function () {
 	ctx.fillStyle = "black";
 	ctx.font = "15px SquareFont";
 	ctx.fillText("Exit", screenWidth/2 - 10 ,screenHeight - 50);
+
+	this.updatePositionAdvsersaire();
 	
 }

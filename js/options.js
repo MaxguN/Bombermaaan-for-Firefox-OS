@@ -11,6 +11,11 @@ Options.prototype.bind = function() {
 		e.stopPropagation();
 		theOptions.updateByClick(e);
 	}, false);
+
+	binder.bind(canvas, "mousemove", function (e) {
+		e.stopPropagation();
+		theOptions.mouseMouve(e);
+	}, false);
 };
 
 Options.prototype.unbind = function() {
@@ -49,6 +54,26 @@ Options.prototype.updateByClick = function (event){
 	
 }
 
+Options.prototype.mouseMouve = function(event){
+
+	var computed  = adaptCoords(event.clientX, event.clientY);
+
+	if ((Math.round(computed.x) >= 352 && Math.round(computed.x) <= 603) && (Math.round(computed.y) >= 303 && Math.round(computed.y) <= 330 )){
+		optionSelected = 1;
+	}
+	
+	if ((Math.round(computed.x) >= 314 && Math.round(computed.x) <= 639) && (Math.round(computed.y) >= 339 && Math.round(computed.y) <= 363 )){
+		optionSelected = 2;
+	}
+	
+	if ((Math.round(computed.x) >= 428 && Math.round(computed.x) <= 528) && (Math.round(computed.y) >= 374 && Math.round(computed.y) <= 398 )){
+
+		optionSelected = 3;
+	}
+	
+
+}
+
 
 Options.prototype.update = function () {
 	if (keysDown[keys.up]) { // Player holding up
@@ -60,7 +85,7 @@ Options.prototype.update = function () {
 	}
 	if (keysDown[keys.down]) { // Player holding down
 		
-		if(optionSelected < 2){
+		if(optionSelected < 3){
 			optionSelected++;
 		}
 		keysDown[keys.down] = false;
@@ -123,14 +148,21 @@ Options.prototype.render = function () {
 	ctx.textBaseline = "center";
 	
 	switch(optionSelected) {
-		case 1: ctx.fillText(" Sound :  <"+optionsData.loadPad()+">", screenWidth/2,300);
+		case 1: ctx.drawImage(bomberman, 0, 0, 32, 32, screenWidth/5 , 298, 32, 32);
+				ctx.fillText(" Sound :  <"+optionsData.loadPad()+">", screenWidth/2,300);
 				ctx.fillText(" Nickname : "+optionsData.loadNickName()+"", screenWidth/2,335);
 				ctx.fillText(" Exit ", screenWidth/2,370);
 				break;
-		case 2: ctx.fillText(" Sound : "+optionsData.loadPad()+"", screenWidth/2,300);
+		case 2: ctx.drawImage(bomberman, 0, 0, 32, 32, screenWidth/5 , 333, 32, 32);
+				ctx.fillText(" Sound : "+optionsData.loadPad()+"", screenWidth/2,300);
 				ctx.fillText(" Nickname : <"+optionsData.loadNickName()+">", screenWidth/2,335);
 				ctx.fillText(" Exit ", screenWidth/2,370);
-				break;			
+				break;	
+		case 3: ctx.drawImage(bomberman, 0, 0, 32, 32, screenWidth/5 , 368, 32, 32);
+				ctx.fillText(" Sound : "+optionsData.loadPad()+"", screenWidth/2,300);
+				ctx.fillText(" Nickname : <"+optionsData.loadNickName()+">", screenWidth/2,335);
+				ctx.fillText(" Exit ", screenWidth/2,370);
+				break;					
 	}
 	
 	

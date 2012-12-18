@@ -26,7 +26,7 @@ function stretch() {
 }
 
 stretch();
-window.addEventListener('resize', stretch, true);
+window.addEventListener('resize', stretch, false);
 
 function adaptCoords(x, y){
 	return {

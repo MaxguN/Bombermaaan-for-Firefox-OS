@@ -18,16 +18,14 @@ function MultiPad(urlPad, urlButton,joueur){
 
 }
 
-/**
-* On affiche le pad
-*
-**/
+
 MultiPad.prototype.render = function() {
 	ctx.globalAlpha = 0.5;
 	ctx.drawImage(this.pad,20,screenHeight - 90);
 	
 	//not pusshed
 	ctx.drawImage(this.button, 65, 0,  64, 64,screenWidth - 85,screenHeight - 75, 64,64 );
+	//ctx.drawimage(img, sourceX, sourceY, sourcew, sourceH, dest X, destY, destW, destY);
 	
 	ctx.globalAlpha = 1;
 }

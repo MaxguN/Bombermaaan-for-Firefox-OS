@@ -2,11 +2,15 @@ function OptionStorage (){
 	if (localStorage) {
 	  //on set les variables par défaut
 		
-		if( localStorage['pad'] === undefined){
-			localStorage['pad'] = "Yes";
+		if( localStorage['sound'] === undefined){
+			localStorage['sound'] = "Yes";
 		}
-		if( localStorage['nickname'] == undefined){
+		if( localStorage['nickname'] === undefined){
 			localStorage['nickname'] = "Player"
+		}
+
+		if( localStorage['color'] === undefined){
+			localStorage['color'] = 0;
 		}
 		
 
@@ -17,13 +21,13 @@ function OptionStorage (){
 	}
 }
 
-OptionStorage.prototype.savePad = function (value){
-	localStorage['pad'] = value;
+OptionStorage.prototype.saveSound = function (value){
+	localStorage['sound'] = value;
 
 }
 
-OptionStorage.prototype.loadPad = function (){
-	return localStorage['pad'];
+OptionStorage.prototype.loadSound = function (){
+	return localStorage['sound'];
 
 }
 
@@ -34,6 +38,16 @@ OptionStorage.prototype.saveNickName = function (value){
 
 OptionStorage.prototype.loadNickName = function (){
 	return localStorage['nickname'];
+
+}
+
+OptionStorage.prototype.saveColor = function (value){
+	localStorage['color'] = value;
+
+}
+
+OptionStorage.prototype.loadColor = function (){
+	return localStorage['color'];
 
 }
 

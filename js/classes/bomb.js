@@ -4,6 +4,7 @@ function Bomb(url, joueur){
 	this.etatAnimation = 0;
 	this.dureeAnimation = 16;
 	this.temps=0;
+	this.radius = joueur.radiusBombe;
 
 	this.image = new Image();
 	this.image.referenceBomb = this;
@@ -21,9 +22,7 @@ function Bomb(url, joueur){
 }
 
 Bomb.prototype.dessinerBombe = function (context) {
-	//console.log("on pose une bombe " + this.x, this.y);
 	var frame = 0;
-	var test = 1;
 	frame = Math.floor(this.etatAnimation / this.dureeAnimation);
 		if(frame > 2) {
 			frame %= 3;
@@ -32,7 +31,7 @@ Bomb.prototype.dessinerBombe = function (context) {
 	this.etatAnimation++;
 	if (this.temps++ >30){
 		if(this.dureeAnimation<4){
-			
+			map.addDeflagration(new Deflagration(varProperties.DeflagrationSrc,this));
 			delete map.bombes[map.bombes.indexOf(this)];
 			//mettre animation de l'explosion
 			}

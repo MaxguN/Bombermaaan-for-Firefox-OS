@@ -7,7 +7,7 @@
 	"pixelsUnitaireCarte": "32",
 	
 	"BombeSrc" : "resources/images/arena_bomb.png",
-	"DeflagrationSrc" : "ressources/images/arena_flame.png",
+	"DeflagrationSrc" : "resources/images/arena_flame.png",
 	"personnageUnPositionInitX" : "1",
 	"personnageUnPositionInitY" : "2",
 	"personnageDeuxPositionInitX" : "13",

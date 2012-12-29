@@ -1,13 +1,13 @@
 /* Constantes de nommage des requettes */
 const 	REFRESH_OUT_GAME_DATA = "REFRESH_OUT_GAME_DATA",
-		MESSAGE               = "MESSAGE",
-		SEND_SELF_DATA        = "SEND_SELF_DATA";
+        MESSAGE               = "MESSAGE",
+        SEND_SELF_DATA        = "SEND_SELF_DATA";
 		/* ... */
 		
 /* Constantes de typage des messages */
 const	TO_ALL       = "TO_ALL",
-		TO_PLAYER    = "TO_PLAYER",
-		TO_ROOM      = "TO_ROOM";
+        TO_PLAYER    = "TO_PLAYER",
+        TO_ROOM      = "TO_ROOM";
 		/* ... */
 
 function BWSS(address,playerName,listener){
@@ -25,7 +25,7 @@ function BWSS(address,playerName,listener){
 		}
 
 		bwss.connection.onmessage = function(event){
-			/** Les evenements de cette section sont identifiés puis un appel est fait à la méthode correspondante du listener
+			/**	Les evenements de cette section sont identifiés puis un appel est fait à la méthode correspondante du listener
 			**	Le traitement à effectuer par le client est donc définit dans le listener, une méthode existe pour chaque type
 			** 	de message pouvant être envoyé par le serveur
 			**/

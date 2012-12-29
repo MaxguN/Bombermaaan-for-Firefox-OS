@@ -1,13 +1,13 @@
 /* Constantes de nommage des requettes */
-const 	REFRESH_OUT_GAME_DATA	= "REFRESH_OUT_GAME_DATA",
-		MESSAGE					= "MESSAGE",
-		SEND_SELF_DATA			= "SEND_SELF_DATA";
+const 	REFRESH_OUT_GAME_DATA = "REFRESH_OUT_GAME_DATA",
+		MESSAGE               = "MESSAGE",
+		SEND_SELF_DATA        = "SEND_SELF_DATA";
 		/* ... */
 		
 /* Constantes de typage des messages */
-const	TO_ALL					= "TO_ALL",
-		TO_PLAYER				= "TO_PLAYER",
-		TO_ROOM					= "TO_ROOM";
+const	TO_ALL       = "TO_ALL",
+		TO_PLAYER    = "TO_PLAYER",
+		TO_ROOM      = "TO_ROOM";
 		/* ... */
 
 function BWSS(address,playerName,listener){
@@ -27,7 +27,7 @@ function BWSS(address,playerName,listener){
 		bwss.connection.onmessage = function(event){
 			/** Les evenements de cette section sont identifiés puis un appel est fait à la méthode correspondante du listener
 			**	Le traitement à effectuer par le client est donc définit dans le listener, une méthode existe pour chaque type
-			** 	message pouvant être envoyé par le serveur
+			** 	de message pouvant être envoyé par le serveur
 			**/
 
 			try{
@@ -38,10 +38,10 @@ function BWSS(address,playerName,listener){
 						break;
 					/* ... */
 					default:
-						console.log("uknown received message from server : "+event.data);
+						console.log("unknown received message from server : "+event.data);
 				}
 			}catch(e){
-				console.log("uknown received message from server : "+event.data);
+				console.log("unknown received message from server : "+event.data);
 			}
 		}
 	}
@@ -53,32 +53,32 @@ function BWSS(address,playerName,listener){
 	**	Il est donc recommandé de ne pas modifier cette section.
 	**/
 	
-	/* rafraichissement des données hors jeu (chat box, joueurs en lignes, sales de jeu disponibles */
+	/* rafraichissement des données hors jeu (chat box, joueurs en lignes, sales de jeu disponibles) */
 	this.requestRefreshOutGameData=function(bwss){
-		var request		= new Object();
-		request.type	= REFRESH_OUT_GAME_DATA;
+		var request	    = new Object();
+		request.type    = REFRESH_OUT_GAME_DATA;
 		
 		bwss.connection.send(JSON.stringify(request));
 	}
 	
 	/* envoi d'un message */
 	this.requestMessage=function(bwss,message,messageType,target){
-		var request					= new Object();
-		request.type				= MESSAGE;
-		request.value				= new Object();
-		request.value.message 		= message
-		request.value.messageType 	= messageType;
-		request.value.target		= target;
+		var request               = new Object();
+		request.type              = MESSAGE;
+		request.value             = new Object();
+		request.value.message     = message
+		request.value.messageType = messageType;
+		request.value.target      = target;
 		
 		bwss.connection.send(JSON.stringify(request));
 	}
 	
 	/* envoi des données personnelles au serveur (pseudo, ...) */
 	this.requestSendSelfData=function(bwss){
-		var request			= new Object();
-		request.type		= SEND_SELF_DATA;
-		request.value		= new Object();
-		request.value.name 	= playerName;
+		var request         = new Object();
+		request.type        = SEND_SELF_DATA;
+		request.value       = new Object();
+		request.value.name  = playerName;
 		
 		bwss.connection.send(JSON.stringify(request));
 	}

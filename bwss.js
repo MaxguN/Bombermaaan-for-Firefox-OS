@@ -25,13 +25,14 @@ function BWSS(address,playerName,listener){
 		}
 
 		bwss.connection.onmessage = function(event){
-			/**	Les evenements de cette section sont identifiés puis un appel est fait à la méthode correspondante du listener
+			/**	
+			**	Les evenements de cette section sont identifiés puis un appel est fait à la méthode correspondante du listener
 			**	Le traitement à effectuer par le client est donc définit dans le listener, une méthode existe pour chaque type
 			** 	de message pouvant être envoyé par le serveur
 			**/
 
 			try{
-				var received = eval(event.data);
+				var received = JSON.parse(event.data);
 				switch(received.type){
 					case REFRESH_OUT_GAME_DATA:
 						listener.refreshOutGameData(received.value);
@@ -41,7 +42,7 @@ function BWSS(address,playerName,listener){
 						console.log("unknown received message from server : "+event.data);
 				}
 			}catch(e){
-				console.log("unknown received message from server : "+event.data);
+				console.log(e+"\n unknown received message from server : "+event.data);
 			}
 		}
 	}

@@ -49,10 +49,10 @@ function BWSS(address,playerName,listener){
 						listener.playerJoined(received.value.name,received.value.id);
 						break;
 					case NOTIFY_MESSAGE_SENT:
-						listener.switchInGame(received.value.id);
+						listener.messageSent(received.value.message,received.value.author,received.value.id);
 						break;
 					case NOTIFY_GAME_CREATED:
-						listener.switchInGame(received.value.id);
+						listener.gameCreated(received.value.id,received.value.host);
 						break;
 					/* ... */
 					default:

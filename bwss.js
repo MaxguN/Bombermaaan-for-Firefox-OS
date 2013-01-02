@@ -1,7 +1,12 @@
 /* Constantes de nommage des requettes */
 const 	REFRESH_OUT_GAME_DATA = "REFRESH_OUT_GAME_DATA",
         MESSAGE               = "MESSAGE",
-        SEND_SELF_DATA        = "SEND_SELF_DATA";
+        SEND_SELF_DATA        = "SEND_SELF_DATA",
+		CREATE_GAME           = "CREATE_GAME",
+		JOIN_GAME             = "JOIN_GAME",
+		NOTIFY_PLAYER_JOINED  = "NOTIFY_PLAYER_JOINED",
+		NOTIFY_MESSAGE_SENT   = "NOTIFY_MESSAGE_SENT",
+		NOTIFY_GAME_CREATED   = "NOTIFY_GAME_CREATED";
 		/* ... */
 		
 /* Constantes de typage des messages */
@@ -27,7 +32,7 @@ function BWSS(address,playerName,listener){
 		bwss.connection.onmessage = function(event){
 			/**	
 			**	Les evenements de cette section sont identifiés puis un appel est fait à la méthode correspondante du listener
-			**	Le traitement à effectuer par le client est donc définit dans le listener, une méthode existe pour chaque type
+			**	Le traitement à effectuer par le client est donc définis dans le listener, une méthode existe pour chaque type
 			** 	de message pouvant être envoyé par le serveur
 			**/
 
@@ -36,6 +41,18 @@ function BWSS(address,playerName,listener){
 				switch(received.type){
 					case REFRESH_OUT_GAME_DATA:
 						listener.refreshOutGameData(received.value);
+						break;
+					case JOIN_GAME:
+						listener.switchInGame(received.value.id);
+						break;
+					case NOTIFY_PLAYER_JOINED:
+						listener.playerJoined(received.value.name,received.value.id);
+						break;
+					case NOTIFY_MESSAGE_SENT:
+						listener.switchInGame(received.value.id);
+						break;
+					case NOTIFY_GAME_CREATED:
+						listener.switchInGame(received.value.id);
 						break;
 					/* ... */
 					default:
@@ -63,11 +80,12 @@ function BWSS(address,playerName,listener){
 	}
 	
 	/* envoi d'un message */
-	this.requestMessage=function(bwss,message,messageType,target){
+	this.requestMessage=function(bwss,message,messageType,target,author){
 		var request               = new Object();
 		request.type              = MESSAGE;
 		request.value             = new Object();
 		request.value.message     = message
+		request.value.author      = author;
 		request.value.messageType = messageType;
 		request.value.target      = target;
 		
@@ -80,6 +98,26 @@ function BWSS(address,playerName,listener){
 		request.type        = SEND_SELF_DATA;
 		request.value       = new Object();
 		request.value.name  = playerName;
+		
+		bwss.connection.send(JSON.stringify(request));
+	}
+	
+	/* creation d'une partie */
+	this.requestCreateGame=function(bwss,name){
+		var request         = new Object();
+		request.type        = CREATE_GAME;
+		request.value       = new Object();
+		request.value.name  = name;
+		
+		bwss.connection.send(JSON.stringify(request));
+	}
+	
+	/* demande d'entrée dans une partie */
+	this.requestJoinGame=function(bwss,id){
+		var request         = new Object();
+		request.type        = JOIN_GAME;
+		request.value       = new Object();
+		request.value.id    = id;
 		
 		bwss.connection.send(JSON.stringify(request));
 	}

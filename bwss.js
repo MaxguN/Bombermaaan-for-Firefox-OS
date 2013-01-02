@@ -2,11 +2,11 @@
 const 	REFRESH_OUT_GAME_DATA = "REFRESH_OUT_GAME_DATA",
         MESSAGE               = "MESSAGE",
         SEND_SELF_DATA        = "SEND_SELF_DATA",
-		CREATE_GAME           = "CREATE_GAME",
-		JOIN_GAME             = "JOIN_GAME",
-		NOTIFY_PLAYER_JOINED  = "NOTIFY_PLAYER_JOINED",
-		NOTIFY_MESSAGE_SENT   = "NOTIFY_MESSAGE_SENT",
-		NOTIFY_GAME_CREATED   = "NOTIFY_GAME_CREATED";
+        CREATE_GAME           = "CREATE_GAME",
+        JOIN_GAME             = "JOIN_GAME",
+        NOTIFY_PLAYER_JOINED  = "NOTIFY_PLAYER_JOINED",
+        NOTIFY_MESSAGE_SENT   = "NOTIFY_MESSAGE_SENT",
+        NOTIFY_GAME_CREATED   = "NOTIFY_GAME_CREATED";
 		/* ... */
 		
 /* Constantes de typage des messages */

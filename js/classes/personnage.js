@@ -159,6 +159,7 @@ Personnage.prototype.deplacer = function(direction, map) {
 Personnage.prototype.dessinerPersonnageMort = function(context) {
 	
 	if(this.persoVivant){
+		new Audio("resources/SOUND/BOMBER_DEATH.ogg").play();
 		this.persoVivant=false;
 		this.etatAnimation=0;
 	}

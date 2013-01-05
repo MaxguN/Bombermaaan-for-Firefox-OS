@@ -36,6 +36,7 @@ if(this.affiche<4) {
 	for (var indexPerso in map.personnages) {
 		if(map.personnages[indexPerso].x==this.x && map.personnages[indexPerso].y==this.y){
 			map.personnages[indexPerso].dessinerPersonnageMort(context);
+			
 		}
 	}
 			

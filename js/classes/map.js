@@ -1,6 +1,9 @@
 
 function Map(nom) {
 	
+	
+
+	
 	// Création de l'objet XmlHttpRequest
 	var xhr = getXMLHttpRequest();
 

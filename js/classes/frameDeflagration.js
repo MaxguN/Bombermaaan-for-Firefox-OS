@@ -31,6 +31,12 @@ FrameDeflagration.prototype.dessinerFrameDeflagration = function (context) {
 			delete map.bombes[bombe];
 		}
 	}
+	for (var indexPerso in map.personnages) {
+		if(map.personnages[indexPerso].x==this.x && map.personnages[indexPerso].y==this.y){
+			//add eclatement personnage
+			delete map.personnages[indexPerso];
+		}
+	}
 			
 	context.drawImage(
 	this.image, 

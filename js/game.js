@@ -7,6 +7,12 @@ var multiPad;
 
 function Game() {
 
+   var musique = new Audio("resources/song/title.wav");
+   musique.loop = true;
+   musique.volume=0.4;
+   musique.play();
+	
+
 	optionsData = new OptionStorage();
 	map = new Map("map");//Initialisation des maps
 	screenWidth = map.getLargeur() * varProperties.pixelsUnitaireCarte;

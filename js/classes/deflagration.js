@@ -19,12 +19,15 @@ function Deflagration(url, bombe){
 	this.radius=bombe.radius;
 	this.url=url;
 	this.framesDeflagration = new Array();
+	new Audio("resources/SOUND/EXPLOSION_01_1.ogg").play();
 	
 	
 	
 }
 
 Deflagration.prototype.dessinerDeflagration = function (context) {
+	
+	
 	var radiusAffiche=this.radius;
 	this.etatAnimation++;
 	

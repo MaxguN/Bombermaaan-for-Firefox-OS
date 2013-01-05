@@ -19,6 +19,8 @@ function Bomb(url, joueur){
 	
 	this.image.src = url;
 	
+	new Audio("resources/SOUND/BOMB_BOUNCE.ogg").play();
+	
 }
 
 Bomb.prototype.dessinerBombe = function (context) {

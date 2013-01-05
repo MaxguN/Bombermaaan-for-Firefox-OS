@@ -16,7 +16,7 @@ function Personnage(url, x, y, direction, couleur) {
 	this.direction = direction;
 	this.etatAnimation = -1;
 	this.couleur = couleur;
-	this.radius=1;
+	this.radius=6;
 	
 	// Chargement de l'image dans l'attribut image
 	this.image = new Image();

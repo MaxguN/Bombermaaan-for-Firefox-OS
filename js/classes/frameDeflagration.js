@@ -15,7 +15,6 @@ function FrameDeflagration (url, x,y, boostPuissance, cardinal_etape){
 		
 		// Taille de la deflag
 		this.referenceDeflag.largeur = this.width / 28;
-		
 		this.referenceDeflag.hauteur = this.height ;
 	}
 	
@@ -25,7 +24,6 @@ function FrameDeflagration (url, x,y, boostPuissance, cardinal_etape){
 }
 
 FrameDeflagration.prototype.dessinerFrameDeflagration = function (context) {
-
 	
 	
 	context.drawImage(
@@ -36,7 +34,7 @@ FrameDeflagration.prototype.dessinerFrameDeflagration = function (context) {
 	this.hauteur,
 	this.x * varProperties.pixelsUnitaireCarte, 
 	this.y * varProperties.pixelsUnitaireCarte,
-	varProperties.pixelsUnitaireCarte, 
-	varProperties.pixelsUnitaireCarte
+	eval(varProperties.pixelsUnitaireCarte)+2, 
+	eval(varProperties.pixelsUnitaireCarte)+2
 	);
 }

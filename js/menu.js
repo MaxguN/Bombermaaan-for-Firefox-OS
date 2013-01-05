@@ -45,7 +45,7 @@ Menu.prototype.scores = function () {
 }
 
 Menu.prototype.multiplayer = function() {
-	window.location = "multiplayer.html";
+	window.location = "multiplayer/index.html";
 }
 
 Menu.prototype.exitGame = function () {

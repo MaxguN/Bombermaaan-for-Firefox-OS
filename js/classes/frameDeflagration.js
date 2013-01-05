@@ -15,7 +15,6 @@ function FrameDeflagration (url, x,y, boostPuissance, cardinal_etape){
 		
 		// Taille de la deflag
 		this.referenceDeflag.largeur = this.width / 28;
-		
 		this.referenceDeflag.hauteur = this.height ;
 	}
 	
@@ -25,9 +24,14 @@ function FrameDeflagration (url, x,y, boostPuissance, cardinal_etape){
 }
 
 FrameDeflagration.prototype.dessinerFrameDeflagration = function (context) {
-
 	
-	
+	for (var bombe in map.bombes) {
+		if(map.bombes[bombe].x==this.x && map.bombes[bombe].y==this.y){
+			map.addDeflagration(new Deflagration(varProperties.DeflagrationSrc,map.bombes[bombe]));
+			delete map.bombes[bombe];
+		}
+	}
+			
 	context.drawImage(
 	this.image, 
 	this.largeur*this.cardinal_etape - this.boostPuissance*this.largeur,
@@ -36,7 +40,8 @@ FrameDeflagration.prototype.dessinerFrameDeflagration = function (context) {
 	this.hauteur,
 	this.x * varProperties.pixelsUnitaireCarte, 
 	this.y * varProperties.pixelsUnitaireCarte,
-	varProperties.pixelsUnitaireCarte, 
-	varProperties.pixelsUnitaireCarte
+	eval(varProperties.pixelsUnitaireCarte)+2, 
+	eval(varProperties.pixelsUnitaireCarte)+2
 	);
+	
 }

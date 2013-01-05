@@ -15,21 +15,23 @@ function Deflagration(url, bombe){
 	this.x = eval(bombe.x);
 	this.y = eval(bombe.y);
 	this.etatAnimation = 0;
-	this.dureeAnimation = 16;
 	this.temps=0;
 	this.radius=bombe.radius;
 	this.url=url;
 	this.framesDeflagration = new Array();
 	
+	
+	
 }
 
 Deflagration.prototype.dessinerDeflagration = function (context) {
+	var radiusAffiche=this.radius;
 	this.etatAnimation++;
-	if (this.temps++ >30){
+	
+	if (this.temps++ >20){
 			delete map.deflagrations[map.deflagrations.indexOf(this)];
 	}
 	
-	var boostPuissance=1;
 	switch(this.radius) {
 		case 1 : 
 			boostPuissance=0;
@@ -53,15 +55,20 @@ Deflagration.prototype.dessinerDeflagration = function (context) {
 			boostPuissance=3;
 			break;
 	}
+	if (this.etatAnimation <= this.radius){
+		radiusAffiche=this.etatAnimation;
+	}
+	
+	
 	this.framesDeflagration.push(new FrameDeflagration(this.url, this.x,this.y, boostPuissance, CARDINAL_ETAPE.ICI));
 	
 	
 	//nord
-	for(var j = 1, l = this.radius ; j <= l ; j++) {
+	for(var j = 1, l = radiusAffiche ; j <= l ; j++) {
 		if(map.terrain[this.y-j][this.x]!=2)
 		{
 			
-			j=this.radius+1;
+			j=radiusAffiche+1;
 		}
 		else{
 			if (j==l||map.terrain[this.y-j-1][this.x]!=2){
@@ -72,11 +79,11 @@ Deflagration.prototype.dessinerDeflagration = function (context) {
 		}
 	}
 	//est
-	for(var j = 1, l = this.radius ; j <= l ; j++) {
+	for(var j = 1, l = radiusAffiche ; j <= l ; j++) {
 		if(map.terrain[this.y][this.x+j]!=2)
 		{
 			
-			j=this.radius+1;
+			j=radiusAffiche+1;
 		}
 		else{
 			if (j==l||map.terrain[this.y][this.x+j+1]!=2){
@@ -88,10 +95,10 @@ Deflagration.prototype.dessinerDeflagration = function (context) {
 		}
 	}
 	//sud
-	for(var j = 1, l = this.radius ; j <= l ; j++) {
+	for(var j = 1, l = radiusAffiche ; j <= l ; j++) {
 		if(map.terrain[this.y+j][this.x]!=2)
 		{
-			j=this.radius+1;
+			j=radiusAffiche+1;
 		}
 		else{
 			if (j==l||map.terrain[this.y+j+1][this.x]!=2){
@@ -102,11 +109,11 @@ Deflagration.prototype.dessinerDeflagration = function (context) {
 		}
 	}
 	//ouest
-	for(var j = 1, l = this.radius ; j <= l ; j++) {
+	for(var j = 1, l = radiusAffiche ; j <= l ; j++) {
 		if(map.terrain[this.y][this.x-j]!=2)
 		{
 			
-			j=this.radius+1;
+			j=radiusAffiche+1;
 		}
 		else{
 			if (j==l||map.terrain[this.y][this.x-j-1]!=2){
@@ -118,7 +125,10 @@ Deflagration.prototype.dessinerDeflagration = function (context) {
 	}
 	
 	for(var i = 0, l = this.framesDeflagration.length ; i < l ; i++) {
-		if (this.framesDeflagration[i]!== undefined) this.framesDeflagration[i].dessinerFrameDeflagration(context);
+		if (this.framesDeflagration[i]!== undefined) {
+		this.framesDeflagration[i].dessinerFrameDeflagration(context);
+		}
+
 	}
 	
 

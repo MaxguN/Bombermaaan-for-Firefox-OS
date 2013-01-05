@@ -21,8 +21,8 @@ function Game() {
 	joueur = new Personnage(varProperties.personnageSrc, varProperties.personnageUnPositionInitX, varProperties.personnageUnPositionInitY, DIRECTION.BAS, optionsData.loadColor());
 	map.addPersonnage(joueur);
 
-//	joueur2 = new Personnage(varProperties.personnageSrc, varProperties.personnageDeuxPositionInitX, varProperties.personnageDeuxPositionInitY, DIRECTION.BAS, COULEUR.VERT);
-//	map.addPersonnage(joueur2);
+	joueur2 = new Personnage(varProperties.personnageSrc, varProperties.personnageDeuxPositionInitX, varProperties.personnageDeuxPositionInitY, DIRECTION.BAS, COULEUR.VERT);
+	map.addPersonnage(joueur2);
 
 	
 	

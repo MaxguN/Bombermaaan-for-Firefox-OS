@@ -62,4 +62,4 @@ var main = function () {
 
 
 var then = Date.now();
-setInterval(main, 20); // Execute as fast as possible
+setInterval(main, 30); // Execute as fast as possible

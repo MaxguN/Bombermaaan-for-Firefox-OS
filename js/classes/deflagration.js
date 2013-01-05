@@ -62,7 +62,6 @@ Deflagration.prototype.dessinerDeflagration = function (context) {
 		radiusAffiche=this.etatAnimation;
 	}
 	
-	
 	this.framesDeflagration.push(new FrameDeflagration(this.url, this.x,this.y, boostPuissance, CARDINAL_ETAPE.ICI));
 	
 	
@@ -129,7 +128,7 @@ Deflagration.prototype.dessinerDeflagration = function (context) {
 	
 	for(var i = 0, l = this.framesDeflagration.length ; i < l ; i++) {
 		if (this.framesDeflagration[i]!== undefined) {
-		this.framesDeflagration[i].dessinerFrameDeflagration(context);
+		this.framesDeflagration[i].dessinerFrameDeflagration(context);		
 		}
 
 	}

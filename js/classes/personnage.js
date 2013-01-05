@@ -16,7 +16,7 @@ function Personnage(url, x, y, direction, couleur) {
 	this.direction = direction;
 	this.etatAnimation = -1;
 	this.couleur = couleur;
-	this.radius=1;
+	this.radius=2;
 	this.persoVivant=true;
 	this.decalageX=0;
 	this.decalageY=0;
@@ -179,7 +179,7 @@ Personnage.prototype.dessinerPersonnageMort = function(context) {
 	
 	context.drawImage(
 	this.image, 
-	this.largeur*Math.floor(this.etatAnimation/20), 
+	this.largeur*Math.floor(this.etatAnimation/10), 
 	this.hauteur*this.couleur, 
 	this.largeur,
 	this.hauteur, 
@@ -190,7 +190,7 @@ Personnage.prototype.dessinerPersonnageMort = function(context) {
 	);
 	
 	this.etatAnimation++;
-	if(this.etatAnimation==160){
+	if(this.etatAnimation==80){
 		delete map.personnages[map.personnages.indexOf(this)];
 	}
 	

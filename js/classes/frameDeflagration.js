@@ -6,6 +6,7 @@ function FrameDeflagration (url, x,y, boostPuissance, cardinal_etape){
 	this.y=y;
 	this.boostPuissance = boostPuissance;
 	this.cardinal_etape = cardinal_etape;
+	this.affiche=0;
 	
 	this.image = new Image();
 	this.image.referenceDeflag = this;
@@ -24,7 +25,8 @@ function FrameDeflagration (url, x,y, boostPuissance, cardinal_etape){
 }
 
 FrameDeflagration.prototype.dessinerFrameDeflagration = function (context) {
-	
+if(this.affiche<4) {
+	this.affiche++;
 	for (var bombe in map.bombes) {
 		if(map.bombes[bombe].x==this.x && map.bombes[bombe].y==this.y){
 			map.addDeflagration(new Deflagration(varProperties.DeflagrationSrc,map.bombes[bombe]));
@@ -48,5 +50,5 @@ FrameDeflagration.prototype.dessinerFrameDeflagration = function (context) {
 	eval(varProperties.pixelsUnitaireCarte)+2, 
 	eval(varProperties.pixelsUnitaireCarte)+2
 	);
-	
+}
 }

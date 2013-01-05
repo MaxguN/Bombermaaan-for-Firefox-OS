@@ -24,15 +24,19 @@ function Game() {
 	
 	
 	//initialisation du personnage
+	
 	joueur = new Personnage(varProperties.personnageSrc, varProperties.personnageUnPositionInitX, varProperties.personnageUnPositionInitY, DIRECTION.BAS, optionsData.loadColor());
 	map.addPersonnage(joueur);
 
-	joueur2 = new Personnage(varProperties.personnageSrc, varProperties.personnageDeuxPositionInitX, varProperties.personnageDeuxPositionInitY, DIRECTION.BAS, COULEUR.VERT);
-	map.addPersonnage(joueur2);
+	this.adversaires = new Array();
+	for (i=0; i<4; i++){
+		this.adversaires.push(new Personnage(varProperties.personnageSrc, varProperties.personnageDeuxPositionInitX, varProperties.personnageDeuxPositionInitY, DIRECTION.BAS, i+1));
+		map.addPersonnage(this.adversaires[i]);
+	}
 
 	
 	
-	//on charge les options du jeu personnalisées par le joueur (stockées en Local Storage)
+	//on charge les options du jeu personnalisées par le map.personnages[0] (stockées en Local Storage)
 	optionsData = new OptionStorage(); 
 	
 	//on detecte le type de device
@@ -42,7 +46,7 @@ function Game() {
  		navigator.userAgent.match(/iPod/i) || 
  		navigator.userAgent.match(/firefoxOS/i) || 1 //on set à 1 pour que la condition soit vrai (pour le dev)
 		){ 
- 			multiPad = new MultiPad(varProperties.pad,varProperties.button,joueur);
+ 			multiPad = new MultiPad(varProperties.pad,varProperties.button,map.personnages[0]);
  			theGame = this;
  			this.bind();
 		}	
@@ -81,29 +85,29 @@ Game.prototype.updateByClick = function (event){
 
 	//déplacement
 	if ((Math.round(computed.x) >= 49 && Math.round(computed.x) <= 71) && (Math.round(computed.y) >= 391 && Math.round(computed.y) <= 415 )){
-		joueur.deplacer(DIRECTION.HAUT, map);
+		map.personnages[0].deplacer(DIRECTION.HAUT, map);
 	}
 	
 	if ((Math.round(computed.x) >= 21 && Math.round(computed.x) <= 49) && (Math.round(computed.y) >= 417 && Math.round(computed.y) <= 440 )){
-		joueur.deplacer(DIRECTION.GAUCHE, map);
+		map.personnages[0].deplacer(DIRECTION.GAUCHE, map);
 	}
 	
 	if ((Math.round(computed.x) >= 49 && Math.round(computed.x) <= 71) && (Math.round(computed.y) >= 440 && Math.round(computed.y) <= 466 )){
-		joueur.deplacer(DIRECTION.BAS, map);
+		map.personnages[0].deplacer(DIRECTION.BAS, map);
 	}
 	
 	if ((Math.round(computed.x) >= 72 && Math.round(computed.x) <= 99) && (Math.round(computed.y) >= 418 && Math.round(computed.y) <= 441 )){
-		joueur.deplacer(DIRECTION.DROITE, map);
+		map.personnages[0].deplacer(DIRECTION.DROITE, map);
 		
 	}
 
 	if ((Math.round(computed.x) >= 402 && Math.round(computed.x) <= 453) && (Math.round(computed.y) >= 409 && Math.round(computed.y) <= 462 )){
-		map.addBomb(new Bomb (varProperties.BombeSrc, joueur));
+		map.addBomb(new Bomb (varProperties.BombeSrc, map.personnages[0]));
 	}
 
 	//Exit
 	if ((Math.round(computed.x) >= 231 && Math.round(computed.x) <= 259) && (Math.round(computed.y) >= 418 && Math.round(computed.y) <= 428 )){
-		joueur = undefined;
+		map.personnages[0] = undefined;
 		optionsData = undefined;
 		game = undefined;
 		map = undefined;
@@ -201,14 +205,14 @@ Game.prototype.event = function () {
 	}
 
 	if (keysDown[keys.escape]) {
-		joueur = null;
+		map.personnages[0] = null;
 		menu.exitGame();
 		keysDown[keys.escape] = false;
 	}
 	
 	if (keysDown[keys.escape]) {
 		//on aide le garbage collector de JS en supprimant les références initules.
-		joueur = undefined;
+		map.personnages[0] = undefined;
 		optionsData = undefined;
 		game = undefined;
 		map = undefined;
@@ -219,7 +223,7 @@ Game.prototype.event = function () {
 	}
 	
 	if (keysDown[keys.space]) {
-		map.addBomb(new Bomb (varProperties.BombeSrc, joueur));
+		map.addBomb(new Bomb (varProperties.BombeSrc, map.personnages[0]));
 		keysDown[keys.space] = false;
 	}
 	
@@ -229,29 +233,32 @@ Game.prototype.update = function (length) {
 	this.event();	
 	
 	if (action.haut) {
-		joueur.deplacer(DIRECTION.HAUT, map)
+		map.personnages[0].deplacer(DIRECTION.HAUT, map)
 	 } else if (action.droite) {
-		joueur.deplacer(DIRECTION.DROITE, map)
+		map.personnages[0].deplacer(DIRECTION.DROITE, map)
 	} else if (action.bas) {
-		joueur.deplacer(DIRECTION.BAS, map)
+		map.personnages[0].deplacer(DIRECTION.BAS, map)
 	} else if (action.gauche) {		
-		joueur.deplacer(DIRECTION.GAUCHE, map)
+		map.personnages[0].deplacer(DIRECTION.GAUCHE, map)
 	}
 	
 	this.render();
 }
 
 Game.prototype.updatePositionAdvsersaire = function(){
+	
+	for(idAdversaire in this.adversaires){
 	var randomnumber = Math.round(Math.floor ( Math.random() * 5 ));
 	switch(randomnumber) {
-		case 1: joueur2.deplacer(DIRECTION.HAUT, map);
+		case 1: this.adversaires[idAdversaire].deplacer(DIRECTION.HAUT, map);
 				break;
-		case 2: joueur2.deplacer(DIRECTION.DROITE, map);
+		case 2: this.adversaires[idAdversaire].deplacer(DIRECTION.DROITE, map);
 				break;
-		case 3: joueur2.deplacer(DIRECTION.BAS, map);
+		case 3: this.adversaires[idAdversaire].deplacer(DIRECTION.BAS, map);
 				break;
-		case 4: joueur2.deplacer(DIRECTION.GAUCHE, map);
+		case 4: this.adversaires[idAdversaire].deplacer(DIRECTION.GAUCHE, map);
 				break;						
+	}
 	}
 
 }

@@ -33,8 +33,7 @@ FrameDeflagration.prototype.dessinerFrameDeflagration = function (context) {
 	}
 	for (var indexPerso in map.personnages) {
 		if(map.personnages[indexPerso].x==this.x && map.personnages[indexPerso].y==this.y){
-			//add eclatement personnage
-			delete map.personnages[indexPerso];
+			map.personnages[indexPerso].dessinerPersonnageMort(context);
 		}
 	}
 			

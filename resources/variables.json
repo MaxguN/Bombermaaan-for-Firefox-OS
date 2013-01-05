@@ -1,7 +1,10 @@
 {
 	"personnageSrc" : "resources/images/arena_bomber_walk.png",
+	"personnageSrcMort" : "resources/images/arena_bomber_death.png",
 	"nombreColonnesPerso" : "12",
 	"nombreLignesPerso" : "7",
+	"nombreColonnesPersoMort" : "7",
+	"nombreLignesPersoMort" : "5",
 	"imageInitPerso" : "1",
 	
 	"pixelsUnitaireCarte": "32",

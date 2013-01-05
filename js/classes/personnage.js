@@ -17,6 +17,9 @@ function Personnage(url, x, y, direction, couleur) {
 	this.etatAnimation = -1;
 	this.couleur = couleur;
 	this.radius=1;
+	this.persoVivant=true;
+	this.decalageX=0;
+	this.decalageY=0;
 	
 	// Chargement de l'image dans l'attribut image
 	this.image = new Image();
@@ -30,70 +33,78 @@ function Personnage(url, x, y, direction, couleur) {
 		this.referenceDuPerso.hauteur = this.height / varProperties.nombreLignesPerso;
 	}
 	this.image.src = url;
+	
+
+	
+	
+	
 }
 
 Personnage.prototype.dessinerPersonnage = function(context) {
-	var frame = eval(varProperties.imageInitPerso); // Numéro de l'image à prendre pour l'animation
-	var decalageX = 0, decalageY = 0; // Décalage à appliquer à la position du personnage
-	if(this.etatAnimation >= DUREE_DEPLACEMENT) {
-		// Si le déplacement a atteint ou dépassé le temps nécessaire pour s'effectuer, on le termine
-		this.etatAnimation = -1;
-	} else if(this.etatAnimation >= 0) {
-		// On calcule l'image (frame) de l'animation à afficher
-		frame = Math.floor(this.etatAnimation / DUREE_ANIMATION);
-		if(frame > 3) {
-			frame %= 4;
-		}
-	
-		// Nombre de pixels restant à parcourir entre les deux cases
-		var pixelsAParcourir = varProperties.pixelsUnitaireCarte - (varProperties.pixelsUnitaireCarte * (this.etatAnimation / DUREE_DEPLACEMENT));
-	
-		// À partir de ce nombre, on définit le décalage en x et y.
-		// NOTE : Si vous connaissez une manière plus élégante que ces quatre conditions, je suis preneur
-		if(this.direction == DIRECTION.HAUT) {
-			decalageY = pixelsAParcourir;
-		} else if(this.direction == DIRECTION.BAS) {
-			decalageY = -pixelsAParcourir;
-		} else if(this.direction == DIRECTION.GAUCHE) {
-			decalageX = pixelsAParcourir;
-		} else if(this.direction == DIRECTION.DROITE) {
-			decalageX = -pixelsAParcourir;
-		}
+	if(this.persoVivant){
+		var frame = eval(varProperties.imageInitPerso); // Numéro de l'image à prendre pour l'animation
+		if(this.etatAnimation >= DUREE_DEPLACEMENT) {
+			// Si le déplacement a atteint ou dépassé le temps nécessaire pour s'effectuer, on le termine
+			this.etatAnimation = -1;
+		} else if(this.etatAnimation >= 0) {
+			// On calcule l'image (frame) de l'animation à afficher
+			frame = Math.floor(this.etatAnimation / DUREE_ANIMATION);
+			if(frame > 3) {
+				frame %= 4;
+			}
 		
-		this.etatAnimation++;
-	}
+			// Nombre de pixels restant à parcourir entre les deux cases
+			var pixelsAParcourir = varProperties.pixelsUnitaireCarte - (varProperties.pixelsUnitaireCarte * (this.etatAnimation / DUREE_DEPLACEMENT));
+		
+			// À partir de ce nombre, on définit le décalage en x et y.
+			// NOTE : Si vous connaissez une manière plus élégante que ces quatre conditions, je suis preneur
+			if(this.direction == DIRECTION.HAUT) {
+				this.decalageY = pixelsAParcourir;
+			} else if(this.direction == DIRECTION.BAS) {
+				this.decalageY = -pixelsAParcourir;	
+			} else if(this.direction == DIRECTION.GAUCHE) {
+				this.decalageX = pixelsAParcourir;
+			} else if(this.direction == DIRECTION.DROITE) {
+				this.decalageX = -pixelsAParcourir;
+			}
+		
+			this.etatAnimation++;
+		}
 /*
  * Si aucune des deux conditions n'est vraie, c'est qu'on est immobile, 
  * donc il nous suffit de garder les valeurs 0 pour les variables 
- * frame, decalageX et decalageY
+ * frame, this.decalageX et this.decalageY
  */
 
-	var imageMouvement = function imageMouvement(){
-	switch(frame) {
-			case 0 : return 1;
-			break;
-			case 1 : return 0;
-			break;
-			case 2 : return -1;
-			break;
-			case 3 : return 0;
-			break;
+		var imageMouvement = function imageMouvement(){
+		switch(frame) {
+				case 0 : return 1;
+				break;
+				case 1 : return 0;
+				break;
+				case 2 : return -1;
+				break;
+				case 3 : return 0;
+				break;
 	
+			}
 		}
-	}
 	
-	context.drawImage(
-	this.image, 
-	this.largeur*(imageMouvement()+this.direction), 
-	this.hauteur*this.couleur, // Point d'origine du rectangle source à prendre dans notre image
-	this.largeur,
-	this.hauteur, // Taille du rectangle source (c'est la taille du personnage)
-	// Point de destination (dépend de la taille du personnage)
-	(this.x * varProperties.pixelsUnitaireCarte) + decalageX, 
-	(this.y * varProperties.pixelsUnitaireCarte) - 8 + decalageY,
-	// Point de destination (dépend de la taille du personnage)
-	varProperties.pixelsUnitaireCarte, varProperties.pixelsUnitaireCarte // Taille du rectangle destination (c'est la taille du personnage)
-);
+		context.drawImage(
+		this.image, 
+		this.largeur*(imageMouvement()+this.direction), 
+		this.hauteur*this.couleur, // Point d'origine du rectangle source à prendre dans notre image
+		this.largeur,
+		this.hauteur, // Taille du rectangle source (c'est la taille du personnage)
+		// Point de destination (dépend de la taille du personnage)
+		(this.x * varProperties.pixelsUnitaireCarte) + this.decalageX, 
+		(this.y * varProperties.pixelsUnitaireCarte) - 8 + this.decalageY,
+		// Point de destination (dépend de la taille du personnage)
+		varProperties.pixelsUnitaireCarte, varProperties.pixelsUnitaireCarte // Taille du rectangle destination (c'est la taille du personnage)
+	);
+	}else {
+		this.dessinerPersonnageMort(context);
+	}
 }
 
 Personnage.prototype.getCoordonneesAdjacentes = function(direction)  {
@@ -143,4 +154,44 @@ Personnage.prototype.deplacer = function(direction, map) {
 	this.y = prochaineCase.y;
 		
 	return true;
+}
+
+Personnage.prototype.dessinerPersonnageMort = function(context) {
+	
+	if(this.persoVivant){
+		this.persoVivant=false;
+		this.etatAnimation=0;
+	}
+	
+	// Chargement de l'image dans l'attribut image
+	this.image = new Image();
+	this.image.referenceDuPerso = this;
+	this.image.onload = function() {
+		if(!this.complete) 
+			throw "Erreur de chargement du sprite nommé \"" + url + "\".";
+		
+		// Taille du personnage
+		this.referenceDuPerso.largeur = this.width / varProperties.nombreColonnesPersoMort; 
+		this.referenceDuPerso.hauteur = this.height / varProperties.nombreLignesPersoMort;
+	}
+	this.image.src = varProperties.personnageSrcMort;
+	
+	
+	context.drawImage(
+	this.image, 
+	this.largeur*Math.floor(this.etatAnimation/20), 
+	this.hauteur*this.couleur, 
+	this.largeur,
+	this.hauteur, 
+	this.x * varProperties.pixelsUnitaireCarte, 
+	this.y * varProperties.pixelsUnitaireCarte,
+	varProperties.pixelsUnitaireCarte, 
+	varProperties.pixelsUnitaireCarte 
+	);
+	
+	this.etatAnimation++;
+	if(this.etatAnimation==160){
+		delete map.personnages[map.personnages.indexOf(this)];
+	}
+	
 }

@@ -17,48 +17,54 @@ const	TO_ALL       = "TO_ALL",
 
 function BWSS(address,playerName,listener){
 	this.connection = new WebSocket(address);
-	this.connection.onopen = function(){
-		bwss.requestSendSelfData(bwss);
-		bwss.requestRefreshOutGameData(bwss);
-	}
+	this.listener=listener;
+	this.playerName=playerName;
+	
+	
+	this.initWS=function(bwss){
+		this.connection.onopen = function(){
+			listener.init(bwss);
+		}
 
-	this.connection.onerror = function(error){
-	   console.log('Error detected: ' + error);
-	}
+		this.connection.onerror = function(error){
+		   console.log('Error detected: ' + error);
+		}
 
-	this.connection.onmessage = function(event){
-		/**	
-		**	Les evenements de cette section sont identifiés puis un appel est fait à la méthode correspondante du listener
-		**	Le traitement à effectuer par le client est donc définis dans le listener, une méthode existe pour chaque type
-		** 	de message pouvant être envoyé par le serveur
-		**/
+		this.connection.onmessage = function(event){
+			/**	
+			**	Les evenements de cette section sont identifiés puis un appel est fait à la méthode correspondante du listener
+			**	Le traitement à effectuer par le client est donc définis dans le listener, une méthode existe pour chaque type
+			** 	de message pouvant être envoyé par le serveur
+			**/
 
-		try{
-			var received = JSON.parse(event.data);
-			switch(received.type){
-				case REFRESH_OUT_GAME_DATA:
-					listener.refreshOutGameData(received.value);
-					break;
-				case JOIN_GAME:
-					listener.switchInGame(received.value.id);
-					break;
-				case NOTIFY_PLAYER_JOINED:
-					listener.playerJoined(received.value.name,received.value.id);
-					break;
-				case NOTIFY_MESSAGE_SENT:
-					listener.messageSent(received.value.message,received.value.author,received.value.id);
-					break;
-				case NOTIFY_GAME_CREATED:
-					listener.gameCreated(received.value.id,received.value.host);
-					break;
-				/* ... */
-				default:
-					console.log("unknown received message from server : "+event.data);
+			try{
+				var received = JSON.parse(event.data);
+				switch(received.type){
+					case REFRESH_OUT_GAME_DATA:
+						listener.refreshOutGameData(received.value);
+						break;
+					case JOIN_GAME:
+						listener.switchInGame(received.value);
+						break;
+					case NOTIFY_PLAYER_JOINED:
+						listener.playerJoined(received.value);
+						break;
+					case NOTIFY_MESSAGE_SENT:
+						listener.messageSent(received.value);
+						break;
+					case NOTIFY_GAME_CREATED:
+						listener.gameCreated(received.value);
+						break;
+					/* ... */
+					default:
+						console.log("unknown received message from server : "+event.data);
+				}
+			}catch(e){
+				console.log(e+"\n unknown received message from server : "+event.data);
 			}
-		}catch(e){
-			console.log(e+"\n unknown received message from server : "+event.data);
 		}
 	}
+	
 	
 	/**
 	**	Definition des requetes.
@@ -82,9 +88,9 @@ function BWSS(address,playerName,listener){
 		request.value             = new Object();
 		request.value.message     = message
 		request.value.author      = author;
-		request.value.messageType = messageType;
-		request.value.target      = target;
-		
+		//request.value.messageType = messageType;
+		//request.value.target      = target;
+		console.log(JSON.stringify(request));
 		bwss.connection.send(JSON.stringify(request));
 	}
 	
@@ -118,4 +124,6 @@ function BWSS(address,playerName,listener){
 		bwss.connection.send(JSON.stringify(request));
 	}
 	/* ... */
+	
+	this.initWS(this);
 }

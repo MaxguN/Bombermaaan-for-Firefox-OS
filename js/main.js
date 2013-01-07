@@ -1,5 +1,5 @@
 var selectValue = 1;
-var optionsData; //l'objet qui set les options définies par le joueur.
+var optionsData = new OptionStorage(); //l'objet qui set les options définies par le joueur.
 var xhr;
 
 //dŽbut de dŽfinition des variables

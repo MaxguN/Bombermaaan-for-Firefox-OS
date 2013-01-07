@@ -1004,6 +1004,7 @@ legend {
   color: #333333;
   border: 0;
   border-bottom: 1px solid #e5e5e5;
+  font-family: Title;
 }
 
 legend small {
@@ -3009,6 +3010,7 @@ button.close {
 }
 
 .btn {
+  font-family: Title;
   display: inline-block;
   *display: inline;
   padding: 4px 12px;
@@ -4123,6 +4125,7 @@ input[type="submit"].btn.btn-mini {
   *z-index: 2;
   margin-bottom: 20px;
   overflow: visible;
+  font-family: "Title";
 }
 
 .navbar-inner {
@@ -4169,7 +4172,6 @@ input[type="submit"].btn.btn-mini {
   float: left;
   padding: 10px 20px 10px;
   margin-left: -20px;
-  font-family: "Title";
   font-size: 30px;
   font-weight: 200;
   color: #ffffff;

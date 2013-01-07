@@ -15,10 +15,13 @@ const	TO_ALL       = "TO_ALL",
         TO_ROOM      = "TO_ROOM";
 		/* ... */
 
+var received;
+
 function BWSS(address,playerName,listener){
 	this.connection = new WebSocket(address);
 	this.listener=listener;
 	this.playerName=playerName;
+	this.received = received;
 	
 	
 	this.initWS=function(bwss){
@@ -38,29 +41,29 @@ function BWSS(address,playerName,listener){
 			**/
 
 			try{
-				var received = JSON.parse(event.data);
-				switch(received.type){
+				this.received = JSON.parse(event.data);
+				switch(this.received.type){
 					case REFRESH_OUT_GAME_DATA:
-						listener.refreshOutGameData(received.value);
+						listener.refreshOutGameData(this.received.value);
 						break;
 					case JOIN_GAME:
-						listener.switchInGame(received.value);
+						listener.switchInGame(this.received.value);
 						break;
 					case NOTIFY_PLAYER_JOINED:
-						listener.playerJoined(received.value);
+						listener.playerJoined(this.received.value);
 						break;
 					case NOTIFY_MESSAGE_SENT:
-						listener.messageSent(received.value);
+						listener.messageSent(this.received.value);
 						break;
 					case NOTIFY_GAME_CREATED:
-						listener.gameCreated(received.value);
+						listener.gameCreated(this.received.value);
 						break;
 					/* ... */
 					default:
-						console.log("unknown received message from server : "+event.data);
+						console.log("Unknown received message from server : "+event.data);
 				}
 			}catch(e){
-				console.log(e+"\n unknown received message from server : "+event.data);
+				console.log(e+"\n Unknown received message from server : "+event.data);
 			}
 		}
 	}
@@ -104,12 +107,7 @@ function BWSS(address,playerName,listener){
 		bwss.connection.send(JSON.stringify(request));
 	}
 	
-	/* 
-		Creation d'une partie 
-		Le joueur courant rejoint automatiquement la partie
-		bwss : bwss 
-		name : le nom du joueur
-	*/
+	/* creation d'une partie */
 	this.requestCreateGame=function(bwss,name){
 		var request         = new Object();
 		request.type        = CREATE_GAME;

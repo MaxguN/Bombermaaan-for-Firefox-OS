@@ -45,9 +45,9 @@
 			}
 			this.refreshOutGameData=function(obj){
 				var messages = "";
-				for (var message in obj.messages){
-					messages += "<li>" + message.author + " > " + message.message +"</li>";					
-				}
+				obj.messages.forEach(function(message){
+					messages += "<li>" + message.authorName + " > " + message.message +"</li>";	
+				});
 				$("#chat").html(messages);
 
 				var players = "";
@@ -56,9 +56,9 @@
 						 "<th>Player</th>"+
 						 "</tr>";
 
-				for (var player in obj.players){
+				obj.players.forEach(function(player){
 					players += "<tr><td>" + player.id + "</td><td>" + player.name + "</td></tr>";					
-				}
+				});
 
 				$("#tableauPlayers").html(players);
 	}	

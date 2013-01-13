@@ -6,7 +6,10 @@ const 	REFRESH_OUT_GAME_DATA = "REFRESH_OUT_GAME_DATA",
         JOIN_GAME             = "JOIN_GAME",
         NOTIFY_PLAYER_JOINED  = "NOTIFY_PLAYER_JOINED",
         NOTIFY_MESSAGE_SENT   = "NOTIFY_MESSAGE_SENT",
-        NOTIFY_GAME_CREATED   = "NOTIFY_GAME_CREATED";
+        NOTIFY_GAME_CREATED   = "NOTIFY_GAME_CREATED",
+		NOTIFY_PLAYER_EXITED  = "NOTIFY_PLAYER_EXITED",
+        NOTIFY_ERROR          = "NOTIFY_ERROR",
+        NOTIFY_ENTERING_ROOM  = "NOTIFY_ENTERING_ROOM";
 		/* ... */
 		
 /* Constantes de typage des messages */
@@ -14,7 +17,6 @@ const	TO_ALL       = "TO_ALL",
         TO_PLAYER    = "TO_PLAYER",
         TO_ROOM      = "TO_ROOM";
 		/* ... */
-
 function BWSS(address,playerName,listener){
 	this.connection = new WebSocket(address);
 	this.listener=listener;
@@ -39,6 +41,7 @@ function BWSS(address,playerName,listener){
 
 			try{
 				var received = JSON.parse(event.data);
+				
 				switch(received.type){
 					case REFRESH_OUT_GAME_DATA:
 						listener.refreshOutGameData(received.value);
@@ -55,9 +58,17 @@ function BWSS(address,playerName,listener){
 					case NOTIFY_GAME_CREATED:
 						listener.gameCreated(received.value);
 						break;
+					case NOTIFY_PLAYER_EXITED:
+						listener.playerExited(received.value);
+						break;
+					case NOTIFY_ERROR:
+						listener.error(received.value);
+						break;
+					case NOTIFY_ENTERING_ROOM:
+						listener.enteringRoom(received.value);
 					/* ... */
 					default:
-						console.log("unknown received message from server : "+event.data);
+						console.log("unknown received message from server : "+received.type);
 				}
 			}catch(e){
 				console.log(e+"\n unknown received message from server : "+event.data);
@@ -90,7 +101,7 @@ function BWSS(address,playerName,listener){
 		request.value.author      = author;
 		//request.value.messageType = messageType;
 		//request.value.target      = target;
-		console.log(JSON.stringify(request));
+		
 		bwss.connection.send(JSON.stringify(request));
 	}
 	
@@ -104,12 +115,7 @@ function BWSS(address,playerName,listener){
 		bwss.connection.send(JSON.stringify(request));
 	}
 	
-	/* 
-		Creation d'une partie 
-		Le joueur courant rejoint automatiquement la partie
-		bwss : bwss 
-		name : le nom du joueur
-	*/
+	/* creation d'une partie */
 	this.requestCreateGame=function(bwss,name){
 		var request         = new Object();
 		request.type        = CREATE_GAME;

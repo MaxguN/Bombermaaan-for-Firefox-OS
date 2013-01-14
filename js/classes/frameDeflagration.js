@@ -25,9 +25,6 @@ function FrameDeflagration (url, x,y, boostPuissance, cardinal_etape){
 }
 
 FrameDeflagration.prototype.dessinerFrameDeflagration = function (context) {
-if(this.affiche<3) {
-	
-	if(this.affiche<1){
 	for (var bombe in map.bombes) {
 		if(map.bombes[bombe].x==this.x && map.bombes[bombe].y==this.y){
 			map.addDeflagration(new Deflagration(varProperties.DeflagrationSrc,map.bombes[bombe]));
@@ -39,8 +36,6 @@ if(this.affiche<3) {
 			map.personnages[indexPerso].dessinerPersonnageMort(context);
 			
 		}
-	}
-	this.affiche++;
 	}
 			
 	context.drawImage(
@@ -54,5 +49,4 @@ if(this.affiche<3) {
 	eval(varProperties.pixelsUnitaireCarte)+2, 
 	eval(varProperties.pixelsUnitaireCarte)+2
 	);
-}
 }

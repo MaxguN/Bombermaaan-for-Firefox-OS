@@ -44,7 +44,7 @@ function Game() {
  		navigator.userAgent.match(/webOS/i) ||
  		navigator.userAgent.match(/iPhone/i) || 
  		navigator.userAgent.match(/iPod/i) || 
- 		navigator.userAgent.match(/firefoxOS/i) || 1 //on set à 1 pour que la condition soit vrai (pour le dev)
+ 		navigator.userAgent.match(/firefoxOS/i) //on set à 1 pour que la condition soit vrai (pour le dev)
 		){ 
  			multiPad = new MultiPad(varProperties.pad,varProperties.button,map.personnages[0]);
  			theGame = this;

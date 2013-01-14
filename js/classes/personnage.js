@@ -16,7 +16,7 @@ function Personnage(url, x, y, direction, couleur) {
 	this.direction = direction;
 	this.etatAnimation = -1;
 	this.couleur = couleur;
-	this.radius=2;
+	this.radius=4;
 	this.persoVivant=true;
 	this.decalageX=0;
 	this.decalageY=0;

@@ -6,7 +6,6 @@ var colorTabTaille = 4;
 function Options() {
 	theOptions = this;
 	theOptions.bind();
-	optionsData = new OptionStorage();
 	
 }
 
@@ -107,8 +106,11 @@ Options.prototype.update = function () {
 		if (optionSelected === 1 ){
 			if( optionsData.loadSound() === "Yes"){
 				optionsData.saveSound("No");
+				musiqueMenu.pause();
 			}else if( optionsData.loadSound() === "No") {
 				optionsData.saveSound("Yes");
+				musiqueMenu.load();
+				musiqueMenu.play();
 			}
 		
 		}
@@ -135,8 +137,11 @@ Options.prototype.update = function () {
 		if (optionSelected === 1 ){
 			if( optionsData.loadSound() === "Yes"){
 				optionsData.saveSound("No");
+				musiqueMenu.pause();
 			}else if( optionsData.loadSound() === "No") {
 				optionsData.saveSound("Yes");
+				musiqueMenu.load();
+				musiqueMenu.play();
 			}
 		
 		}

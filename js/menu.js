@@ -1,5 +1,10 @@
+var musiqueMenu;
+
 function Menu() {
-	document.getElementById("title").play();
+	musiqueMenu = new Audio("resources/song/title.wav");
+   	musiqueMenu.loop = true;
+   	musiqueMenu.volume=0.4;
+   	musiqueMenu.play();
 	theMenu = this;
 	this.bind();
 }
@@ -23,7 +28,7 @@ Menu.prototype.unbind = function() {
 Menu.prototype.launchGame = function () {
 	this.unbind();
 	game = new Game();
-	document.getElementById("title").pause();
+	
 	
 	currentObject = game;
 }

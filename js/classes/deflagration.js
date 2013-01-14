@@ -19,7 +19,7 @@ function Deflagration(url, bombe){
 	this.radius=bombe.radius;
 	this.url=url;
 	this.framesDeflagration = new Array();
-	//new Audio("resources/SOUND/EXPLOSION_01_1.ogg").play();
+	new Audio("resources/SOUND/EXPLOSION_01_1.ogg").play();
 	this.cpt=-1;
 	
 	

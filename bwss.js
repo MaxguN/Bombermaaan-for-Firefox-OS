@@ -1,15 +1,31 @@
 /* Constantes de nommage des requettes */
-const 	REFRESH_OUT_GAME_DATA = "REFRESH_OUT_GAME_DATA",
-        MESSAGE               = "MESSAGE",
-        SEND_SELF_DATA        = "SEND_SELF_DATA",
-        CREATE_GAME           = "CREATE_GAME",
-        NOTIFY_PLAYER_JOINED  = "NOTIFY_PLAYER_JOINED",
-        NOTIFY_MESSAGE_SENT   = "NOTIFY_MESSAGE_SENT",
-        NOTIFY_GAME_CREATED   = "NOTIFY_GAME_CREATED",
-        NOTIFY_GAME_REMOVED   = "NOTIFY_GAME_REMOVED",
-        NOTIFY_PLAYER_EXITED  = "NOTIFY_PLAYER_EXITED",
-        NOTIFY_ERROR          = "NOTIFY_ERROR",
-        NOTIFY_ENTERING_ROOM  = "NOTIFY_ENTERING_ROOM";
+		/** implementées **/
+		/* out-room requests */
+const 	REFRESH_OUT_GAME_DATA  = "REFRESH_OUT_GAME_DATA",
+        MESSAGE                = "MESSAGE",
+        SEND_SELF_DATA         = "SEND_SELF_DATA",
+        CREATE_GAME            = "CREATE_GAME",
+        NOTIFY_PLAYER_JOINED   = "NOTIFY_PLAYER_JOINED",
+        NOTIFY_MESSAGE_SENT    = "NOTIFY_MESSAGE_SENT",
+        NOTIFY_GAME_CREATED    = "NOTIFY_GAME_CREATED",
+        NOTIFY_GAME_REMOVED    = "NOTIFY_GAME_REMOVED",
+        NOTIFY_PLAYER_EXITED   = "NOTIFY_PLAYER_EXITED",
+        NOTIFY_ERROR           = "NOTIFY_ERROR",
+        NOTIFY_ENTERING_ROOM   = "NOTIFY_ENTERING_ROOM",
+        NOTIFY_EXITING_ROOM    = "NOTIFY_EXITING_ROOM",
+		
+		/** En cours d'implementation  **/
+		/* in-room requests */
+        GAME_MAP_LIST          = "GAME_MAP_LIST",
+        GAME_MAP_DATA          = "GAME_MAP_DATA",
+        LAUNCH_GAME            = "LAUNCH_GAME",
+        NOTIFY_COLOR_CHANGED   = "NOTIFY_COLOR_CHANGED",
+        NOTIFY_AVAILABLE_COLOR = "NOTIFY_AVAILABLE_COLOR",
+        SELECT_SERVER_MAP      = "SELECT_SERVER_MAP",
+        CHOOSE_COLOR           = "CHOOSE_COLOR";
+		
+		/* in-game requests */
+		
 		/* ... */
 		
 /* Constantes de typage des messages */
@@ -73,6 +89,10 @@ function BWSS(address,playerName,listener){
 						break;
 					//{"type":"NOTIFY_GAME_REMOVED","value":{"id":"gameID"}}
 					case NOTIFY_GAME_REMOVED:
+						listener.gameRemoved(received.value);
+						break;
+					//{"type":"NOTIFY_EXITING_ROOM","value":{"playerID":"playerID"}}
+					case NOTIFY_EXITING_ROOM:
 						listener.gameRemoved(received.value);
 						break;
 					/* ... */

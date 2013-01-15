@@ -34,7 +34,7 @@ Bomb.prototype.dessinerBombe = function (context) {
 	if (this.temps++ >30){
 		if(this.dureeAnimation<4){
 			delete map.bombes[map.bombes.indexOf(this)];
-			map.addDeflagration(new Deflagration(varProperties.DeflagrationSrc,this));
+			map.addDeflagration(new Deflagration(this));
 			
 			}
 		this.dureeAnimation=this.dureeAnimation/2;

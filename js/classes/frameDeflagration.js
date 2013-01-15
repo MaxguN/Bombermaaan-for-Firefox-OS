@@ -1,33 +1,26 @@
 
 
 
-function FrameDeflagration (url, x,y, boostPuissance, cardinal_etape){
-	this.x = x;
+function FrameDeflagration (x,y, boostPuissance, cardinal_etape){
+	this.x=x;
 	this.y=y;
 	this.boostPuissance = boostPuissance;
 	this.cardinal_etape = cardinal_etape;
-	this.affiche=0;
 	
-	this.image = new Image();
-	this.image.referenceDeflag = this;
-	this.image.onload = function() {
-		if(!this.complete) 
-			throw "Erreur de chargement du sprite nommé \"" + url + "\".";
-		
-		// Taille de la deflag
-		this.referenceDeflag.largeur = this.width / 28;
-		this.referenceDeflag.hauteur = this.height ;
+	if(this.textures === undefined){
+		FrameDeflagration.prototype.textures=new Image();
+		FrameDeflagration.prototype.textures.onload = function(){
+			FrameDeflagration.prototype.largeur=(FrameDeflagration.prototype.textures.width/28);
+			FrameDeflagration.prototype.hauteur=FrameDeflagration.prototype.textures.height;
+		}
+		FrameDeflagration.prototype.textures.src=varProperties.DeflagrationSrc;
 	}
-	
-	this.image.src = url;
-
-	
 }
 
 FrameDeflagration.prototype.dessinerFrameDeflagration = function (context) {
 	for (var bombe in map.bombes) {
 		if(map.bombes[bombe].x==this.x && map.bombes[bombe].y==this.y){
-			map.addDeflagration(new Deflagration(varProperties.DeflagrationSrc,map.bombes[bombe]));
+			map.addDeflagration(new Deflagration(map.bombes[bombe]));
 			delete map.bombes[bombe];
 		}
 	}
@@ -37,9 +30,9 @@ FrameDeflagration.prototype.dessinerFrameDeflagration = function (context) {
 			
 		}
 	}
-			
+
 	context.drawImage(
-	this.image, 
+	this.textures, 
 	this.largeur*this.cardinal_etape - this.boostPuissance*this.largeur,
 	0,
 	this.largeur,

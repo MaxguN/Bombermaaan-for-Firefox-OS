@@ -11,13 +11,12 @@ var CARDINAL_ETAPE = {
 	
 }
 
-function Deflagration(url, bombe){
+function Deflagration(bombe){
 	this.x = eval(bombe.x);
 	this.y = eval(bombe.y);
 	this.etatAnimation = 0;
 	this.temps=0;
 	this.radius=bombe.radius;
-	this.url=url;
 	this.framesDeflagration = new Array();
 	new Audio("resources/SOUND/EXPLOSION_01_1.ogg").play();
 	this.cpt=-1;
@@ -64,7 +63,7 @@ Deflagration.prototype.dessinerDeflagration = function (context) {
 		radiusAffiche=this.etatAnimation;
 	}
 	
-	this.framesDeflagration[this.cpt].push(new FrameDeflagration(this.url, this.x,this.y, boostPuissance, CARDINAL_ETAPE.ICI));
+	this.framesDeflagration[this.cpt].push(new FrameDeflagration(this.x,this.y, boostPuissance, CARDINAL_ETAPE.ICI));
 	
 	
 	//nord
@@ -76,9 +75,9 @@ Deflagration.prototype.dessinerDeflagration = function (context) {
 		}
 		else{
 			if (j==l||map.terrain[this.y-j-1][this.x]!=2){
-				this.framesDeflagration[this.cpt].push(new FrameDeflagration(this.url,  this.x,this.y-j, boostPuissance, CARDINAL_ETAPE.NORD_FIN));}
+				this.framesDeflagration[this.cpt].push(new FrameDeflagration(this.x,this.y-j, boostPuissance, CARDINAL_ETAPE.NORD_FIN));}
 			else {
-				this.framesDeflagration[this.cpt].push(new FrameDeflagration(this.url,  this.x,this.y-j, boostPuissance, CARDINAL_ETAPE.NORD_MILIEU));
+				this.framesDeflagration[this.cpt].push(new FrameDeflagration(this.x,this.y-j, boostPuissance, CARDINAL_ETAPE.NORD_MILIEU));
 			}
 		}
 	}
@@ -91,10 +90,10 @@ Deflagration.prototype.dessinerDeflagration = function (context) {
 		}
 		else{
 			if (j==l||map.terrain[this.y][this.x+j+1]!=2){
-				this.framesDeflagration[this.cpt].push(new FrameDeflagration(this.url,  this.x+j,this.y, boostPuissance, CARDINAL_ETAPE.EST_FIN));
+				this.framesDeflagration[this.cpt].push(new FrameDeflagration(this.x+j,this.y, boostPuissance, CARDINAL_ETAPE.EST_FIN));
 			}
 			else {
-				this.framesDeflagration[this.cpt].push(new FrameDeflagration(this.url,  this.x+j,this.y, boostPuissance, CARDINAL_ETAPE.EST_MILIEU));
+				this.framesDeflagration[this.cpt].push(new FrameDeflagration(this.x+j,this.y, boostPuissance, CARDINAL_ETAPE.EST_MILIEU));
 			}
 		}
 	}
@@ -106,9 +105,9 @@ Deflagration.prototype.dessinerDeflagration = function (context) {
 		}
 		else{
 			if (j==l||map.terrain[this.y+j+1][this.x]!=2){
-				this.framesDeflagration[this.cpt].push(new FrameDeflagration(this.url, this.x,this.y+j, boostPuissance, CARDINAL_ETAPE.SUD_FIN));}
+				this.framesDeflagration[this.cpt].push(new FrameDeflagration(this.x,this.y+j, boostPuissance, CARDINAL_ETAPE.SUD_FIN));}
 			else {
-				this.framesDeflagration[this.cpt].push(new FrameDeflagration(this.url, this.x,this.y+j, boostPuissance, CARDINAL_ETAPE.SUD_MILIEU));
+				this.framesDeflagration[this.cpt].push(new FrameDeflagration(this.x,this.y+j, boostPuissance, CARDINAL_ETAPE.SUD_MILIEU));
 			}
 		}
 	}
@@ -121,20 +120,18 @@ Deflagration.prototype.dessinerDeflagration = function (context) {
 		}
 		else{
 			if (j==l||map.terrain[this.y][this.x-j-1]!=2){
-				this.framesDeflagration[this.cpt].push(new FrameDeflagration(this.url, this.x-j,this.y, boostPuissance, CARDINAL_ETAPE.OUEST_FIN));}
+				this.framesDeflagration[this.cpt].push(new FrameDeflagration(this.x-j,this.y, boostPuissance, CARDINAL_ETAPE.OUEST_FIN));}
 			else {
-				this.framesDeflagration[this.cpt].push(new FrameDeflagration(this.url, this.x-j,this.y, boostPuissance, CARDINAL_ETAPE.OUEST_MILIEU));
+				this.framesDeflagration[this.cpt].push(new FrameDeflagration(this.x-j,this.y, boostPuissance, CARDINAL_ETAPE.OUEST_MILIEU));
 			}
+		}
+	}
+	for(var i = 0, l = this.framesDeflagration[this.cpt].length ; i < l ; i++) {
+		if (this.framesDeflagration[this.cpt][i]!== undefined) {
+		this.framesDeflagration[this.cpt][i].dessinerFrameDeflagration(context);
 		}
 	}
 	
-	if(this.cpt>1){
-		for(var i = 0, l = this.framesDeflagration[this.cpt-2].length ; i < l ; i++) {
-			if (this.framesDeflagration[this.cpt-2][i]!== undefined) {
-			this.framesDeflagration[this.cpt-2][i].dessinerFrameDeflagration(context);
-			}
-		}
-	}
 	
 
 }

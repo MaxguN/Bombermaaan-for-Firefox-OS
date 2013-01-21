@@ -16,7 +16,7 @@ body {
 	left : 0;
 	right : 0;
 	bottom : 0;
-	cursor : pointer;
+	
 
 }
 
@@ -27,6 +27,16 @@ canvas {
 	right : 0;
 	bottom : 0;
 }
+
+.inputPlayer {
+	position : absolute;
+	z-index: 999;
+	background-color: white;
+	top: 100px;
+	display : none;
+
+}
+
 @font-face {
 	font-family: SquareFont;
 	src: url('../resources/fonts/Square.ttf') format('truetype');

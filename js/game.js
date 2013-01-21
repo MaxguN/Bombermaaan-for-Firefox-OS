@@ -3,14 +3,19 @@ var joueur2;
 var nomFichierVariables = 'resources/variables.json';
 var map;
 var multiPad;
+var musique;
 
 
 function Game() {
-
-   var musique = new Audio("resources/song/title.wav");
+	musiqueMenu.pause();
+   musique = new Audio("resources/song/title.wav");
    musique.loop = true;
    musique.volume=0.4;
-   musique.play();
+
+   if(optionsData.loadSound() === "Yes"){
+		musique.play();
+	}
+   
 	
 
 	optionsData = new OptionStorage();
@@ -44,8 +49,8 @@ function Game() {
  		navigator.userAgent.match(/webOS/i) ||
  		navigator.userAgent.match(/iPhone/i) || 
  		navigator.userAgent.match(/iPod/i) || 
- 		navigator.userAgent.match(/firefoxOS/i) //on set à 1 pour que la condition soit vrai (pour le dev)
-		){ 
+ 		navigator.userAgent.match(/firefoxOS/i) ||  //on set à 1 pour que la condition soit vrai (pour le dev)
+		1 ){ 
  			multiPad = new MultiPad(varProperties.pad,varProperties.button,map.personnages[0]);
  			theGame = this;
  			this.bind();
@@ -108,7 +113,7 @@ Game.prototype.updateByClick = function (event){
 	//Exit
 	if ((Math.round(computed.x) >= 231 && Math.round(computed.x) <= 259) && (Math.round(computed.y) >= 418 && Math.round(computed.y) <= 428 )){
 		map.personnages[0] = undefined;
-		optionsData = undefined;
+		
 		game = undefined;
 		map = undefined;
 		multiPad = undefined;
@@ -212,12 +217,12 @@ Game.prototype.event = function () {
 	
 	if (keysDown[keys.escape]) {
 		//on aide le garbage collector de JS en supprimant les références initules.
-		map.personnages[0] = undefined;
+		console.log("echap");
+		map.personnages[0] = undefined; //y'a un pbl avec cette ligne je pense !!
 		optionsData = undefined;
 		game = undefined;
 		map = undefined;
 		multiPad = undefined;
-		
 		menu.exitGame();
 		keysDown[keys.escape] = false;
 	}

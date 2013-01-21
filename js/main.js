@@ -42,8 +42,15 @@ addEventListener("keydown", function (e) {
 }, false);
 
 document.body.appendChild(canvas);
+var element = document.createElement('input');
+	element.setAttribute("type", "text");
+	element.setAttribute("class", "inputPlayer");
+	document.body.appendChild(element);
+
+
 
 var menu = new Menu();
+
 var game;
 var options;
 var scores;

@@ -1,20 +1,13 @@
 var musiqueMenu;
 
 function Menu() {
-	console.log("Menu CHargé");
 	musiqueMenu = new Audio("resources/song/title.wav");
    	musiqueMenu.loop = true;
-   	musiqueMenu.volume = 0.4;
+   	musiqueMenu.volume=0.4;
 	theMenu = this;
 	this.bind();
 
-
-	if(optionsData.loadSound() === "Yes"){
-		console.log("sound");
-		musiqueMenu.load();
-		musiqueMenu.play();
-		
-	}else {
+	if(optionsData.loadSound() === "No"){
 		musiqueMenu.pause();
 	}
 }
@@ -71,8 +64,6 @@ Menu.prototype.exitGame = function () {
 	screenHeight = 640;
 	canvas.width = screenWidth;
 	canvas.height = screenHeight;
-	musiqueMenu.pause();
-	musique.pause();
 	
 	currentObject = menu;
 	

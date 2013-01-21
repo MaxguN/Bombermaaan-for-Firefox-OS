@@ -8,7 +8,6 @@ function Options() {
 	theOptions = this;
 	theOptions.bind();
 	
-	
 }
 
 Options.prototype.addInput - function(){

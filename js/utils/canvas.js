@@ -3,6 +3,7 @@ var screenHeight = 640;
 
 // Create the canvas
 var canvas = document.createElement("canvas");
+canvas.setAttribute("id", "game"); //utilisé par le Joystick
 var ctx = canvas.getContext("2d");
 canvas.width = screenWidth;
 canvas.height = screenHeight;

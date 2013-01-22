@@ -3,6 +3,7 @@ var joueur2;
 var nomFichierVariables = 'resources/variables.json';
 var map;
 var multiPad;
+var joyStick;
 var musique;
 
 
@@ -52,6 +53,7 @@ function Game() {
  		navigator.userAgent.match(/firefoxOS/i) ||  //on set à 1 pour que la condition soit vrai (pour le dev)
 		1 ){ 
  			multiPad = new MultiPad(varProperties.pad,varProperties.button,map.personnages[0]);
+ 			joyStick = new JoyStick();
  			theGame = this;
  			this.bind();
 		}	
@@ -279,6 +281,8 @@ Game.prototype.render = function () {
 		multiPad.render();
 	}
 
+
+
 	//affichage du nickname du joueur
 	ctx.fillStyle = "red";
 	ctx.font = "10px SquareFont";
@@ -290,5 +294,10 @@ Game.prototype.render = function () {
 	ctx.fillText("Exit", screenWidth/2 - 10 ,screenHeight - 50);
 
 	this.updatePositionAdvsersaire();
+
+	if(joyStick != null){
+		console.log("Appelle du render");
+		joyStick.render();
+	}
 	
 }

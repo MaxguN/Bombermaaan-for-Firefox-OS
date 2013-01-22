@@ -13,16 +13,15 @@ const 	REFRESH_OUT_GAME_DATA  = "REFRESH_OUT_GAME_DATA",
         NOTIFY_ERROR           = "NOTIFY_ERROR",
         NOTIFY_ENTERING_ROOM   = "NOTIFY_ENTERING_ROOM",
         NOTIFY_EXITING_ROOM    = "NOTIFY_EXITING_ROOM",
-		
-		/** En cours d'implementation  **/
 		/* in-room requests */
         GAME_MAP_LIST          = "GAME_MAP_LIST",
         GAME_MAP_DATA          = "GAME_MAP_DATA",
         LAUNCH_GAME            = "LAUNCH_GAME",
         NOTIFY_COLOR_CHANGED   = "NOTIFY_COLOR_CHANGED",
-        NOTIFY_AVAILABLE_COLOR = "NOTIFY_AVAILABLE_COLOR",
         SELECT_SERVER_MAP      = "SELECT_SERVER_MAP",
-        CHOOSE_COLOR           = "CHOOSE_COLOR";
+        CHOOSE_COLOR           = "CHOOSE_COLOR",
+        NOTIFY_GAME_STARTED    = "NOTIFY_GAME_STARTED",
+        NOTIFY_GAME_FINISHED   = "NOTIFY_GAME_FINISHED";
 		
 		/* in-game requests */
 		
@@ -95,6 +94,26 @@ function BWSS(address,playerName,listener){
 					case NOTIFY_EXITING_ROOM:
 						listener.gameRemoved(received.value);
 						break;
+					//{"type":"GAME_MAP_LIST","value":{"maps":["smap1","smap2",...]}};
+					case GAME_MAP_LIST:
+						listener.mapListUpdated(received.value);
+						break;
+					//{"type":"GAME_MAP_DATA","value":{"id":"gameID","map":"smap"}}
+					case GAME_MAP_DATA:
+						listener.mapDataUpdated(received.value);
+						break;
+					//{"type":"NOTIFY_COLOR_CHANGED","value":{"gameID":"gameID","colors":[0,1,3,...]}}"
+					case NOTIFY_COLOR_CHANGED:
+						listener.colorChanged(received.value);
+						break;
+					//{"type":"NOTIFY_GAME_STARTED","value":{"gameID":"+gameID+"}}
+					case NOTIFY_GAME_STARTED:
+						listener.gameStarted(received.value);
+						break;
+					//{"type":"NOTIFY_GAME_FINISHED","value":{"gameID":"gameID"}}";
+					case NOTIFY_GAME_FINISHED:
+						listener.gameFinished(received.value);
+						break;
 					/* ... */
 					default:
 						console.log("unknown received message from server : "+received.type);
@@ -115,8 +134,8 @@ function BWSS(address,playerName,listener){
 	
 	/* rafraichissement des données hors jeu (chat box, joueurs en lignes, sales de jeu disponibles) */
 	this.requestRefreshOutGameData=function(bwss){
-		var request	    = new Object();
-		request.type    = REFRESH_OUT_GAME_DATA;
+		var request	              = new Object();
+		request.type              = REFRESH_OUT_GAME_DATA;
 		
 		bwss.connection.send(JSON.stringify(request));
 	}
@@ -136,32 +155,63 @@ function BWSS(address,playerName,listener){
 	
 	/* envoi des données personnelles au serveur (pseudo, ...) */
 	this.requestSendSelfData=function(bwss){
-		var request         = new Object();
-		request.type        = SEND_SELF_DATA;
-		request.value       = new Object();
-		request.value.name  = playerName;
+		var request             = new Object();
+		request.type            = SEND_SELF_DATA;
+		request.value           = new Object();
+		request.value.name      = playerName;
 		
 		bwss.connection.send(JSON.stringify(request));
 	}
 	
 	/* creation d'une partie */
 	this.requestCreateGame=function(bwss){
-		var request         = new Object();
-		request.type        = CREATE_GAME;
+		var request             = new Object();
+		request.type            = CREATE_GAME;
 		
 		bwss.connection.send(JSON.stringify(request));
 	}
 	
 	/* demande d'entrée dans une partie */
 	this.requestJoinGame=function(bwss,id){
-		var request         = new Object();
-		request.type        = JOIN_GAME;
-		request.value       = new Object();
-		request.value.id    = id;
+		var request             = new Object();
+		request.type            = JOIN_GAME;
+		request.value           = new Object();
+		request.value.id        = id;
 		
 		bwss.connection.send(JSON.stringify(request));
 	}
 	
+	/* demande de lancement d'une partie (utilisable uniquement par l'hote) */
+	this.requestLaunchGame=function(bwss,gameID){
+		var request             = new Object();
+		request.type            = LAUNCH_GAME;
+		request.value           = new Object();
+		request.value.gameID    = gameID;
+		
+		bwss.connection.send(JSON.stringify(request));
+	}
+	
+	/* demande de selection de map (utilisable uniquement par l'hote) */
+	this.requestSelectMap=function(bwss,mapID,gameID){
+		var request             = new Object();
+		request.type            = SELECT_SERVER_MAP;
+		request.value           = new Object();
+		request.value.mapID     = mapID;
+		request.value.gameID    = gameID;
+		
+		bwss.connection.send(JSON.stringify(request));
+	}
+	
+	/* demande de selection d'un couleur (utilisable uniquement par un joueur de la partie 'gameID') */
+	this.requestChooseColor=function(bwss,gameID,color){
+		var request             = new Object();
+		request.type            = CHOOSE_COLOR;
+		request.value           = new Object();
+		request.value.mapID     = gameID;
+		request.value.gameID    = color;
+		
+		bwss.connection.send(JSON.stringify(request));
+	}
 	/* ... */
 	
 	this.initWS(this);

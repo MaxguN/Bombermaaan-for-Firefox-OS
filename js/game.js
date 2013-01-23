@@ -16,7 +16,7 @@ function Game() {
    if(optionsData.loadSound() === "Yes"){
 		musique.play();
 	}
-   
+
 	
 
 	optionsData = new OptionStorage();
@@ -56,73 +56,79 @@ function Game() {
  			joyStick = new JoyStick();
  			theGame = this;
  			this.bind();
+ 			joyStick.bind();
 		}	
 	
 }
 
 Game.prototype.bind = function() {
-	binder.bind(canvas, "mousedown", function (e) {
+	binder.bind(canvas, "touchstart", function (e) {
 		e.stopPropagation();
 		theGame.updateByClick(e);
 	}, false);
-	binder.bind(canvas, "mouseup", function (e) {
+	binder.bind(canvas, "touchend", function (e) {
 		e.stopPropagation();
 		theGame.updateByClick(e);
 	}, false);
 };
 
 Game.prototype.unbind = function() {
-	binder.unbind(canvas, "mousedown");
+	binder.unbind(canvas, "touchstart");
+	binder.unbind(canvas, "touchend");
 };
 
 
 Game.prototype.updateByClick = function (event){
 	//console.log("Le vrai X : " + event.clientX);
 	//console.log("Le vrai Y : " + event.clientY);
-	
-	var x = event.clientX;
-	var y = event.clientY;
-	
-	var computed  = adaptCoords(x, y);
-	
-	//console.log("X computed: " + Math.round(computed.x));
-	//console.log("Y computed: " + Math.round(computed.y));
 
-
-
-	//déplacement
-	if ((Math.round(computed.x) >= 49 && Math.round(computed.x) <= 71) && (Math.round(computed.y) >= 391 && Math.round(computed.y) <= 415 )){
-		map.personnages[0].deplacer(DIRECTION.HAUT, map);
-	}
-	
-	if ((Math.round(computed.x) >= 21 && Math.round(computed.x) <= 49) && (Math.round(computed.y) >= 417 && Math.round(computed.y) <= 440 )){
-		map.personnages[0].deplacer(DIRECTION.GAUCHE, map);
-	}
-	
-	if ((Math.round(computed.x) >= 49 && Math.round(computed.x) <= 71) && (Math.round(computed.y) >= 440 && Math.round(computed.y) <= 466 )){
-		map.personnages[0].deplacer(DIRECTION.BAS, map);
-	}
-	
-	if ((Math.round(computed.x) >= 72 && Math.round(computed.x) <= 99) && (Math.round(computed.y) >= 418 && Math.round(computed.y) <= 441 )){
-		map.personnages[0].deplacer(DIRECTION.DROITE, map);
+	for (var i = 0; i < event.changedTouches.length; i += 1) {
+		var touch = event.changedTouches[i];
 		
-	}
+		var x = touch.clientX;
+		var y = touch.clientY;
 
-	if ((Math.round(computed.x) >= 402 && Math.round(computed.x) <= 453) && (Math.round(computed.y) >= 409 && Math.round(computed.y) <= 462 )){
-		map.addBomb(new Bomb (varProperties.BombeSrc, map.personnages[0]));
-	}
-
-	//Exit
-	if ((Math.round(computed.x) >= 231 && Math.round(computed.x) <= 259) && (Math.round(computed.y) >= 418 && Math.round(computed.y) <= 428 )){
-		map.personnages[0] = undefined;
+		var computed  = adaptCoords(x, y);
 		
-		game = undefined;
-		map = undefined;
-		multiPad = undefined;
-		
-		menu.exitGame();
-	}
+		//console.log("X computed: " + Math.round(computed.x));
+		//console.log("Y computed: " + Math.round(computed.y));
 
+
+
+		//déplacement
+		if ((Math.round(computed.x) >= 49 && Math.round(computed.x) <= 71) && (Math.round(computed.y) >= 391 && Math.round(computed.y) <= 415 )){
+			map.personnages[0].deplacer(DIRECTION.HAUT, map);
+		}
+		
+		if ((Math.round(computed.x) >= 21 && Math.round(computed.x) <= 49) && (Math.round(computed.y) >= 417 && Math.round(computed.y) <= 440 )){
+			map.personnages[0].deplacer(DIRECTION.GAUCHE, map);
+		}
+		
+		if ((Math.round(computed.x) >= 49 && Math.round(computed.x) <= 71) && (Math.round(computed.y) >= 440 && Math.round(computed.y) <= 466 )){
+			map.personnages[0].deplacer(DIRECTION.BAS, map);
+		}
+		
+		if ((Math.round(computed.x) >= 72 && Math.round(computed.x) <= 99) && (Math.round(computed.y) >= 418 && Math.round(computed.y) <= 441 )){
+			map.personnages[0].deplacer(DIRECTION.DROITE, map);
+			
+		}
+
+		if ((Math.round(computed.x) >= 402 && Math.round(computed.x) <= 453) && (Math.round(computed.y) >= 409 && Math.round(computed.y) <= 462 )){
+			map.addBomb(new Bomb (varProperties.BombeSrc, map.personnages[0]));
+		}
+
+		//Exit
+		if ((Math.round(computed.x) >= 231 && Math.round(computed.x) <= 259) && (Math.round(computed.y) >= 418 && Math.round(computed.y) <= 428 )){
+			map.personnages[0] = undefined;
+			
+			game = undefined;
+			map = undefined;
+			multiPad = undefined;
+			
+			menu.exitGame();
+		}
+
+	}
 	
 }
 

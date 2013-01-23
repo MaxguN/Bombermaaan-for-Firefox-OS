@@ -11,7 +11,6 @@
 
   }*/
 
-  var $canvas = $("#game");
   var joypadSize = 50,
           joypadCenterSize = 25,
           joypadTouch = null,
@@ -22,24 +21,23 @@
   }
 
   JoyStick.prototype.bind = function () {
-    binder.bind($canvas, "touchstart", function (e) {
+    binder.bind(canvas, "touchstart", function (e) {
     //e.stopPropagation();
       if(joypadTouch===null) {
-          var evt = e.originalEvent,
-          touch = evt.changedTouches[0],
-          loc = targetLocation(this,touch);
+          var touch = e.changedTouches[0],
+          loc = joyStick.targetLocation(this,touch);
 
           joypadTouch = touch.identifier;
           joypad = { centerX: loc.x, centerY: loc.y };
         }
     }, false);
 
-    binder.bind($canvas, "touchmove", function (e) {
+    binder.bind(canvas, "touchmove", function (e) {
     //e.stopPropagation();
       if(joypadTouch !== null) {
           var evt = e.originalEvent,
-              touch = evt.changedTouches[0],
-              loc = targetLocation(this,touch);
+              touch = e.changedTouches[0],
+              loc = joyStick.targetLocation(this,touch);
 
 
           // Make sure we're on the right touch
@@ -65,12 +63,12 @@
         e.preventDefault();
     }, false);
 
-    binder.bind($canvas, "touchend", function (e) {
+    binder.bind(canvas, "touchend", function (e) {
     //e.stopPropagation();
       if(joypadTouch !== null) {
           var evt = e.originalEvent,
-              touch = evt.changedTouches[0],
-              loc = targetLocation(this,touch);
+              touch = e.changedTouches[0],
+              loc = joyStick.targetLocation(this,touch);
 
 
           // Make sure we're on the right touch
@@ -89,6 +87,8 @@
               joypad.dist = joypadSize;
             }
             joypad.dist *= 100 / joypadSize;
+
+            joypadTouch = null;
           }
 
 
@@ -109,25 +109,28 @@
   }
 
   JoyStick.prototype.joypadCircle = function (x,y,color,size) {
-    ctx.beginPath();
-          ctx.globalAlpha=0.5;
-          ctx.fillStyle = color;
-          ctx.arc(x, y, size, 0, Math.PI*2, true); 
-          ctx.closePath();
-          ctx.fill();
+    ctx.save();
 
+    ctx.beginPath();
+    ctx.globalAlpha=0.5;
+    ctx.fillStyle = color;
+    ctx.arc(x, y, size, 0, Math.PI*2, true); 
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.restore();
   }
 
   JoyStick.prototype.render = function () {
-      ctx.clearRect(0,0,$canvas.width(),$canvas.height());
+      //ctx.clearRect(0,0,canvas.width,canvas.height);
         if(joypadTouch !== null) {
           ctx.fillStyle = "#000";
           ctx.font = "20px arial";
           ctx.fillText("Angle:" + Math.round(joypad.ang*180/Math.PI) + 
                        " Dist:" + Math.round(joypad.dist),0,30);
 
-          joypadCircle(joypad.centerX,joypad.centerY,"#000",joypadSize);
-          joypadCircle(joypad.x,joypad.y,"#ccc",joypadCenterSize);
+          this.joypadCircle(joypad.centerX,joypad.centerY,"#000",joypadSize);
+          this.joypadCircle(joypad.x,joypad.y,"#ccc",joypadCenterSize);
 
         }
   }
